@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<docblox>
+   <parser>
+      <target>/tmp/olap4php-docs</target>
+      <markers>
+         <item>todo</item>
+         <item>fixme</item>
+      </markers>
+   </parser>
+   <transformer>
+      <target>/tmp/olap4php-docs</target>
+   </transformer>
+   <files>
+      <directory>.</directory>
+      <ignore>autoload.php</ignore>
+   </files>
+   <logging>
+      <level>warn</level>
+      <paths>
+         <default>/tmp/olap4php-docs/log/olap4php.log</default>
+         <errors>/tmp/olap4php-docs/log/errors.log</errors>
+      </paths>
+   </logging>
+</docblox>

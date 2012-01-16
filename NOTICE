@@ -1,0 +1,19 @@
+   =========================================================================
+   ==  NOTICE file corresponding to section 4(d) of the Apache License,   ==
+   ==  Version 2.0, in this case for the olap4php distribution.           ==
+   =========================================================================
+
+   Portions of this software are originally based on the following:
+     - Software Copyright (C) 2007-2011 Julian Hyde,
+       http://www.olap4j.org.
+     - Software Copyright (C) 2007-2011 Luc Boudreau,
+       http://www.olap4j.org.
+       
+   This product includes software developed by the following:
+     - Copyright (C) 2011 John Coyle <john@olap4php.org>
+     - Copyright (C) 2011 Patrick Leckey <pat@olap4php.org>
+     - Copyright (C) 2001 Paul Brohman <paul@olap4php.org>
+
+   This product includes software developed by
+   SeeWind Design Corp. (http://www.seewind.com/).
+   Copyright (C) 2011 SeeWind Design Corp.

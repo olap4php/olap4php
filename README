@@ -1,0 +1,21 @@
+olap4php v0.9.0
+
+This project is originally based on the olap4j Java project, written
+by Julian Hyde, Luc Boudreau and other contributors.  Their software
+copyrights can be found in the NOTICE file as described in the LICENSE
+and the header of each source file.
+
+Each source file must be prefaced with the header text as found in the
+HEADER file of the most recent version of the package available to you.
+There should be no other header or license information, additional
+information can be added to the NOTICE file as necessary.
+
+For more information, please visit the following web sites:
+ - http://olap4php.org
+ - http://olap4j.org
+
+Change Log
+----------
+
+0.9.0: Friday, January 13th, 2012; Patrick Leckey <pat@olap4php.org>
+- Initial public release
