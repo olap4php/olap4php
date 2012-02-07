@@ -29,6 +29,10 @@ use \DOMElement;
 use OLAP4PHP\Metadata\DataType;
 use OLAP4PHP\Provider\XMLA\XMLAConnectionContext;
 use OLAP4PHP\Common\NamedList;
+use OLAP4PHP\Provider\XMLA\XMLAUtil;
+use OLAP4PHP\Provider\XMLA\XMLAProperty;
+use OLAP4PHP\Metadata\PropertyType;
+use OLAP4PHP\Metadata\PropertyContentType;
 
 class XMLAPropertyHandler extends XMLAMetadataHandler
 {
