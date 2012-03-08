@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -40,7 +40,7 @@ interface INamedList
     * @return the element of the list with the specified name, or null if
     * there is no such element
     */
-   public function get ( $index );
+   public function get( $index );
 
 
    /**
@@ -53,13 +53,13 @@ interface INamedList
     * if there is no such element
     *
     */
-   public function indexOfName ( $name );
+   public function indexOfName( $name );
 
 
    /**
     * @return integer Return the list size
     */
-   public function size ( );
+   public function size();
 
    /**
     * @brief Adds a new item to the list

@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -45,30 +45,30 @@ use OLAP4PHP\Provider\XMLA\Metadata\XMLAMeasureHandler;
  */
 class XMLALevel extends XMLAElement implements ILevel, INamed
 {
-   public  $hierarchy;
+   public $hierarchy;
    private $depth;
    private $type;
    private $cardinality;
    private $propertyList;
-   public  $memberList;
+   public $memberList;
    private $calculated;
 
    /**
-     * Constructor
-     *
-     * @param XMLAHierarchy $hierarchy
-     * @param string $uniqueName Unique name
-     * @param string $name Name
-     * @param string $caption Caption
-     * @param string $description Description
-     * @param integer $depth Distance to root
-     * @param LevelType $type Level type
-     * @param boolean $calculated Whether level is calculated
-     * @param integer $cardinality Number of members in this level
-     */
-   public function __construct (
+    * Constructor
+    *
+    * @param XMLAHierarchy $hierarchy
+    * @param string        $uniqueName  Unique name
+    * @param string        $name        Name
+    * @param string        $caption     Caption
+    * @param string        $description Description
+    * @param integer       $depth       Distance to root
+    * @param LevelType     $type        Level type
+    * @param boolean       $calculated  Whether level is calculated
+    * @param integer       $cardinality Number of members in this level
+    */
+   public function __construct(
       XMLAHierarchy $hierarchy,
-      $uniqueName, 
+      $uniqueName,
       $name,
       $caption,
       $description,
@@ -76,105 +76,105 @@ class XMLALevel extends XMLAElement implements ILevel, INamed
       LevelType $type = NULL,
       $calculated,
       $cardinality
-      )
+   )
    {
-      parent::__construct ( $uniqueName, $name, $caption, $description );
-      assert ( $hierarchy != null );
-      $this->type = $type;
-      $this->calculated = $calculated;
+      parent::__construct( $uniqueName, $name, $caption, $description );
+      assert( $hierarchy != null );
+      $this->type        = $type;
+      $this->calculated  = $calculated;
       $this->cardinality = $cardinality;
-      $this->depth = $depth;
-      $this->hierarchy = $hierarchy;
+      $this->depth       = $depth;
+      $this->hierarchy   = $hierarchy;
 
-      $levelRestrictions = array (
-         "CATALOG_NAME"          => $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getName ( ),
-         "SCHEMA_NAME"           => $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getName(),
-         "CUBE_NAME"             => $hierarchy->getDimension ( )->getCube ( )->getName(),
-         "DIMENSION_UNIQUE_NAME" => $hierarchy->getDimension ( )->getUniqueName(),
+      $levelRestrictions = array(
+         "CATALOG_NAME"          => $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getName(),
+         "SCHEMA_NAME"           => $hierarchy->getDimension()->getCube()->getSchema()->getName(),
+         "CUBE_NAME"             => $hierarchy->getDimension()->getCube()->getName(),
+         "DIMENSION_UNIQUE_NAME" => $hierarchy->getDimension()->getUniqueName(),
          "HIERARCHY_UNIQUE_NAME" => $hierarchy->getUniqueName(),
-         "LEVEL_UNIQUE_NAME"     => $this->getUniqueName ( )
+         "LEVEL_UNIQUE_NAME"     => $this->getUniqueName()
       );
 
       $this->propertyList = new LazyMetadataList (
-         new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_PROPERTIES ),
-         XMLAConnectionContext::createAtLevel ( $this ),
-         new XMLAPropertyHandler ( ),
-         $levelRestrictions );
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_PROPERTIES),
+         XMLAConnectionContext::createAtLevel( $this ),
+         new XMLAPropertyHandler (),
+         $levelRestrictions);
 
       try
       {
-         if ( $hierarchy->getDimension ( )->getDimensionType ( ) == DimensionType::getEnum ( DimensionType::MEASURE ) )
+         if ( $hierarchy->getDimension()->getDimensionType() == DimensionType::getEnum( DimensionType::MEASURE ) )
          {
-            $restrictions = array (
-               "CATALOG_NAME"          => $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getName ( ),
-               "SCHEMA_NAME"           => $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getName ( ),
-               "CUBE_NAME"             => $hierarchy->getDimension ( )->getCube ( )->getName ( )
+            $restrictions = array(
+               "CATALOG_NAME"          => $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getName(),
+               "SCHEMA_NAME"           => $hierarchy->getDimension()->getCube()->getSchema()->getName(),
+               "CUBE_NAME"             => $hierarchy->getDimension()->getCube()->getName()
             );
 
             $this->memberList =
                new LazyMetadataList (
-                  new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_MEASURES ),
+                  new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_MEASURES),
                   new XMLAConnectionContext (
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getMetadata ( )->getConnection ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getMetadata ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( ),
-                      $hierarchy->getDimension ( )->getCube ( ),
-                      $hierarchy->getDimension ( ),
-                      $hierarchy,
-                      $this ),
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getMetadata()->getConnection(),
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getMetadata(),
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog(),
+                     $hierarchy->getDimension()->getCube()->getSchema(),
+                     $hierarchy->getDimension()->getCube(),
+                     $hierarchy->getDimension(),
+                     $hierarchy,
+                     $this),
                   new XMLAMeasureHandler (
-                      $hierarchy->getDimension ( ),
-                      $restrictions ) );
-         } 
+                     $hierarchy->getDimension(),
+                     $restrictions));
+         }
          else
          {
             $this->memberList =
                new LazyMetadataList (
-                 new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_MEMBERS ),
-                 new XMLAConnectionContext (
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getMetadata ( )->getConnection ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( )->getMetadata ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( )->getCatalog ( ),
-                      $hierarchy->getDimension ( )->getCube ( )->getSchema ( ),
-                      $hierarchy->getDimension ( )->getCube ( ),
-                      $hierarchy->getDimension ( ),
-                      $hierarchy,
-                      $this ),
-                 new XMLAMemberHandler ( ),
-                 $levelRestrictions );
+                  new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_MEMBERS),
+                  new XMLAConnectionContext (
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getMetadata()->getConnection(),
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog()->getMetadata(),
+                     $hierarchy->getDimension()->getCube()->getSchema()->getCatalog(),
+                     $hierarchy->getDimension()->getCube()->getSchema(),
+                     $hierarchy->getDimension()->getCube(),
+                     $hierarchy->getDimension(),
+                     $hierarchy,
+                     $this),
+                  new XMLAMemberHandler (),
+                  $levelRestrictions);
          }
-      } 
+      }
       catch ( OlapException $e )
       {
-         throw new RuntimeException ( "Programming error", $e );
+         throw new RuntimeException ("Programming error", $e);
       }
    }
 
-   public function getDepth ( )
+   public function getDepth()
    {
       return $this->depth;
    }
 
-   public function getHierarchy ( )
+   public function getHierarchy()
    {
       return $this->hierarchy;
    }
 
-   public function getDimension ( )
+   public function getDimension()
    {
-      return $this->hierarchy->getDimension ( );
+      return $this->hierarchy->getDimension();
    }
 
-   public function isCalculated ( )
+   public function isCalculated()
    {
       return $this->calculated;
    }
 
    /**
-   * return LevelType
-   */
-   public function getLevelType ( )
+    * return LevelType
+    */
+   public function getLevelType()
    {
       return $this->type;
    }
@@ -182,22 +182,22 @@ class XMLALevel extends XMLAElement implements ILevel, INamed
    /**
     * @return NamedList
     */
-   public function getProperties ( )
+   public function getProperties()
    {
       // standard properties first
-      $list = new NamedList ( StandardMemberProperty::getEnumConstants ( ) );
+      $list = new NamedList (StandardMemberProperty::getEnumConstants());
       // then level-specific properties
-      $list->addAll ( $this->propertyList );
+      $list->addAll( $this->propertyList );
 
       return $list;
    }
 
-   public function getMembers ( )
+   public function getMembers()
    {
       return $this->memberList;
    }
 
-   public function getCardinality ( )
+   public function getCardinality()
    {
       return $this->cardinality;
    }

@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -34,15 +34,15 @@ interface IEnum
    /**
     * @return Return the name of the enum
     */
-   public function name ( );
+   public function name();
 
    /**
     * @return IEnum Return the specifed enum constant.
     */
-   static public function getEnum ( $constant );
+   static public function getEnum( $constant );
 
    /**
     * @return Return the array of IEnum constants (objects)
     */
-   static public function getEnumConstants ( );
+   static public function getEnumConstants();
 }

@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -33,73 +33,73 @@ interface IMember extends IMetadataElement
    /**
     * @return array IMember
     */
-   public function getAncestorMembers ( );
+   public function getAncestorMembers();
 
 
    /**
     * @return int
     */
-   public function getChildMemberCount ( );
+   public function getChildMemberCount();
 
 
    /**
     * @return array IMember
     */
-   public function getChildMembers ( );
+   public function getChildMembers();
 
 
    /**
     * @return IMember
     */
-   public function getDataMember ( );
+   public function getDataMember();
 
 
    /**
     * @return int
     */
-   public function getDepth ( );
+   public function getDepth();
 
 
    /**
     * @return IDimension
     */
-   public function getDimension ( );
+   public function getDimension();
 
 
    /**
     * @return IHierarchy
     */
-   public function getHierarchy ( );
+   public function getHierarchy();
 
 
    /**
     * @return ILevel
     */
-   public function getLevel ( );
+   public function getLevel();
 
 
    /**
     * @return IType
     */
-   public function getMemberType ( );
+   public function getMemberType();
 
 
    /**
     * @return int
     */
-   public function getOrdinal ( );
+   public function getOrdinal();
 
 
    /**
     * @return IMember
     */
-   public function getParentMember ( );
+   public function getParentMember();
 
 
    /**
     * @return boolean
     */
-   public function isHidden ( );
+   public function isHidden();
 
 }
 

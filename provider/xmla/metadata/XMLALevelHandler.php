@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -42,12 +42,12 @@ class XMLALevelHandler extends XMLAMetadataHandler
    /**
     * Constructor
     */
-   public function __construct ( XMLACube $cubeForCallback )
+   public function __construct( XMLACube $cubeForCallback )
    {
       $this->cubeForCallback = $cubeForCallback;
    }
 
-   public function handle ( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
+   public function handle( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
    {
       /*
       Example:
@@ -73,28 +73,28 @@ class XMLALevelHandler extends XMLAMetadataHandler
 
        */
 
-      $levelUniqueName = XMLAUtil::stringElement ( $row, 'LEVEL_UNIQUE_NAME');
+      $levelUniqueName = XMLAUtil::stringElement( $row, 'LEVEL_UNIQUE_NAME' );
       // SAP BW doesn't return a HIERARCHY_NAME attribute,
       // so try to use the unique name instead
-      $levelName =
-          XMLAUtil::stringElement ( $row, 'LEVEL_NAME') == null
-              ? ($levelUniqueName != null
-                      ? ereg_replace ( "\\]$", "", ereg_replace ( "^\\[", "", $levelUniqueName ) )
-                      : null)
-              : XMLAUtil::stringElement ( $row, 'LEVEL_NAME' );
-      $levelCaption = XMLAUtil::stringElement ( $row, 'LEVEL_CAPTION' );
-      $description = XMLAUtil::stringElement ( $row, 'DESCRIPTION' );
-      $levelNumber = XMLAUtil::integerElement ( $row, 'LEVEL_NUMBER' );
-      $levelTypeCode = XMLAUtil::integerElement ( $row, 'LEVEL_TYPE' );
+      $levelName     =
+         XMLAUtil::stringElement( $row, 'LEVEL_NAME' ) == null
+            ? ($levelUniqueName != null
+            ? ereg_replace( "\\]$", "", ereg_replace( "^\\[", "", $levelUniqueName ) )
+            : null)
+            : XMLAUtil::stringElement( $row, 'LEVEL_NAME' );
+      $levelCaption  = XMLAUtil::stringElement( $row, 'LEVEL_CAPTION' );
+      $description   = XMLAUtil::stringElement( $row, 'DESCRIPTION' );
+      $levelNumber   = XMLAUtil::integerElement( $row, 'LEVEL_NUMBER' );
+      $levelTypeCode = XMLAUtil::integerElement( $row, 'LEVEL_TYPE' );
 
-      $levelType = LevelType::getDictionary()->forOrdinal ( $levelTypeCode );
-      $calculated = ( $levelTypeCode & self::MDLEVEL_TYPE_CALCULATED ) != 0;
-      $levelCardinality = XMLAUtil::integerElement ( $row, 'LEVEL_CARDINALITY' );
-      $level = new XMLALevel (
-          $context->getHierarchy ( $row ), $levelUniqueName, $levelName,
-          $levelCaption, $description, $levelNumber, $levelType,
-          $calculated, $levelCardinality );
-      $list->add ( $level );
-      $this->cubeForCallback->levelsByUname [ $level->getUniqueName ( ) ] = $level;
+      $levelType        = LevelType::getDictionary()->forOrdinal( $levelTypeCode );
+      $calculated       = ($levelTypeCode & self::MDLEVEL_TYPE_CALCULATED) != 0;
+      $levelCardinality = XMLAUtil::integerElement( $row, 'LEVEL_CARDINALITY' );
+      $level            = new XMLALevel (
+         $context->getHierarchy( $row ), $levelUniqueName, $levelName,
+         $levelCaption, $description, $levelNumber, $levelType,
+         $calculated, $levelCardinality);
+      $list->add( $level );
+      $this->cubeForCallback->levelsByUname [$level->getUniqueName()] = $level;
    }
 }

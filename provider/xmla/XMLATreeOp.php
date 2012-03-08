@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -32,7 +32,7 @@ class XMLATreeOp implements IEnum
 {
    const CHILDREN    = 0;
    const SIBLINGS    = 1;
-   const PARENT      = 2; 
+   const PARENT      = 2;
    const SELF        = 3;
    const DESCENDANTS = 4;
    const ANCESTORS   = 5;
@@ -53,7 +53,7 @@ class XMLATreeOp implements IEnum
    private $description;
 
    private static $constants;
-   
+
 
    protected function __construct( $treeOpType )
    {
@@ -92,43 +92,47 @@ class XMLATreeOp implements IEnum
             break;
 
          default:
-            throw new OLAPException( 'Tree Operation of type ' . $treeOpType . ' not supported' );
+            throw new OLAPException('Tree Operation of type ' . $treeOpType . ' not supported');
       }
    }
 
-   static public function getEnum ( $constant )
+   static public function getEnum( $constant )
    {
       if ( !self::$constants )
-         self::getEnumConstants ( );
+      {
+         self::getEnumConstants();
+      }
 
-      if ( ! isset ( self::$constants [ $constant ] ) )
-         throw new \InvalidArgumentException ( 'Invalid constant.' );
+      if ( !isset (self::$constants [$constant]) )
+      {
+         throw new \InvalidArgumentException ('Invalid constant.');
+      }
 
-      return self::$constants [ $constant ];
+      return self::$constants [$constant];
    }
 
    /**
     * return array Return the datatype enumeration constants
     */
-   static public function getEnumConstants ( )
+   static public function getEnumConstants()
    {
       if ( !self::$constants )
       {
          // array of enums constants
-         self::$constants = array (
-            new XMLATreeOp ( self::CHILDREN ),
-            new XMLATreeOp ( self::SIBLINGS ),
-            new XMLATreeOp ( self::PARENT ),
-            new XMLATreeOp ( self::SELF ),
-            new XMLATreeOp ( self::DESCENDANTS ),
-            new XMLATreeOp ( self::ANCESTORS )
+         self::$constants = array(
+            new XMLATreeOp (self::CHILDREN),
+            new XMLATreeOp (self::SIBLINGS),
+            new XMLATreeOp (self::PARENT),
+            new XMLATreeOp (self::SELF),
+            new XMLATreeOp (self::DESCENDANTS),
+            new XMLATreeOp (self::ANCESTORS)
          );
       }
 
       return self::$constants;
    }
 
-   public function name ( )
+   public function name()
    {
    }
 

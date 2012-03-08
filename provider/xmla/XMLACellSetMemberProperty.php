@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -29,7 +29,6 @@ namespace OLAP4PHP\Provider\XMLA;
 use OLAP4PHP\Metadata\IProperty;
 
 
-
 /**
  * @brief XMLA Cell Set Member Property Implementation
  */
@@ -41,11 +40,11 @@ class XMLACellSetMemberProperty implements IProperty
 
 
    /**
-    * @param string $uniqueName
+    * @param string        $uniqueName
     * @param XMLAHierarchy $hierarchy
-    * @param string $name
+    * @param string        $name
     */
-   public function __construct ( $uniqueName, XMLAHierarchy $hierarchy, $name )
+   public function __construct( $uniqueName, XMLAHierarchy $hierarchy, $name )
    {
       $this->uniqueName = $uniqueName;
       $this->hierarchy  = $hierarchy;
@@ -56,7 +55,7 @@ class XMLACellSetMemberProperty implements IProperty
    /**
     * @return ContentType
     */
-   public function getContentType ( )
+   public function getContentType()
    {
    }
 
@@ -64,22 +63,14 @@ class XMLACellSetMemberProperty implements IProperty
    /**
     * @return DataType
     */
-   public function getDataType ( )
+   public function getDataType()
    {
    }
 
    /**
     * @return string
     */
-   public function getCaption ( )
-   {
-   }
-
-
-   /**
-    * @return string
-    */
-   public function getDescription ( )
+   public function getCaption()
    {
    }
 
@@ -87,7 +78,15 @@ class XMLACellSetMemberProperty implements IProperty
    /**
     * @return string
     */
-   public function getUniqueName ( )
+   public function getDescription()
+   {
+   }
+
+
+   /**
+    * @return string
+    */
+   public function getUniqueName()
    {
       return $this->uniqueName;
    }

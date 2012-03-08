@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -49,15 +49,15 @@ class XMLACatalog implements ICatalog
     * Constructor
     *
     * @param XMLADatabaseMetaData $databaseMetaData
-    * @param string $name
+    * @param string               $name
     */
-   public function __construct ( XMLADatabaseMetadata $databaseMetaData, $name )
+   public function __construct( XMLADatabaseMetadata $databaseMetaData, $name )
    {
-      assert ( $databaseMetaData != NULL );
-      assert ( $name != NULL );
+      assert( $databaseMetaData != NULL );
+      assert( $name != NULL );
 
       $this->databaseMetadata = $databaseMetaData;
-      $this->name = $name;
+      $this->name             = $name;
 
       // From olap4j:
       //   Fetching the schemas is a tricky part. There are no XMLA requests to
@@ -70,14 +70,14 @@ class XMLACatalog implements ICatalog
       //   
       // Lazy loading again
       $this->schemas = new LazyMetadataList(
-              new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_CUBES ),
-              new XMLAConnectionContext( $this->databaseMetadata->getConnection(), $this->databaseMetadata, $this, NULL, NULL, NULL, NULL, NULL ),
-              new XMLACatalogSchemaHandler( $this->name ) );
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_CUBES),
+         new XMLAConnectionContext($this->databaseMetadata->getConnection(), $this->databaseMetadata, $this, NULL, NULL, NULL, NULL, NULL),
+         new XMLACatalogSchemaHandler($this->name));
    }
 
    public function hashCode()
    {
-      if ( empty( $this->hash ) )
+      if ( empty($this->hash) )
       {
          $this->hash = XMLAUtil::javaStringHashCode( $this->name );
       }
@@ -99,7 +99,7 @@ class XMLACatalog implements ICatalog
    /**
     * @return XMLADatabaseMetaData
     */
-   public function getMetaData ( )
+   public function getMetaData()
    {
       return $this->databaseMetadata;
    }
@@ -108,7 +108,7 @@ class XMLACatalog implements ICatalog
    /**
     * @return string
     */
-   public function getName ( )
+   public function getName()
    {
       return $this->name;
    }
@@ -117,7 +117,7 @@ class XMLACatalog implements ICatalog
    /**
     * @return LaztMetadataList
     */
-   public function getSchemas ( )
+   public function getSchemas()
    {
       return $this->schemas;
    }

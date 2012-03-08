@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -40,16 +40,16 @@ interface IXMLAMetadataHandler
     * Converts an XML element from an XMLA result set into a XMLA metadata
     * object and appends it to a list of metadata objects.
     *
-    * @param DOMElement $row XMLA element
+    * @param DOMElement            $row     XMLA element
     *
     * @param XMLAConnectionContext $context Context (schema, cube, dimension, etc.) that the
-    * request was executed in and that the element will belong to
+    *                                       request was executed in and that the element will belong to
     *
-    * @param $list List of metadata objects to append new metadata object
+    * @param                       $list    List of metadata objects to append new metadata object
     *
     * @throws OlapException on error
     */
-   public function handle ( DOMElement $row, XMLAConnectionContext $context, NamedList $list );
+   public function handle( DOMElement $row, XMLAConnectionContext $context, NamedList $list );
 
    /**
     * Sorts a list of metadata object.
@@ -59,5 +59,5 @@ interface IXMLAMetadataHandler
     *
     * @param list List of metadata elements
     */
-   public function sortList ( NamedList $list );
+   public function sortList( NamedList $list );
 }

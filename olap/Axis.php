@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -42,37 +42,37 @@ class Axis implements IAxis
    const SECTIONS = 4;
 
 
-   public function __construct ( $ordinal )
+   public function __construct( $ordinal )
    {
       $this->ordinal = $ordinal;
    }
 
 
-   public function axisOrdinal ( )
+   public function axisOrdinal()
    {
       return $this->ordinal;
    }
 
 
-   public function getCaption ( )
+   public function getCaption()
    {
-      return $this->name ( );
+      return $this->name();
    }
 
 
-   public function isFilter ( )
+   public function isFilter()
    {
-      return ( $this->ordinal == Axis::FILTER ) ? true : false;
+      return ($this->ordinal == Axis::FILTER) ? true : false;
    }
 
 
-   public function name ( )
+   public function name()
    {
-      return 'AXIS('.$this->ordinal.')';
+      return 'AXIS(' . $this->ordinal . ')';
    }
 
-   static public function getEnum ( $constant )
+   static public function getEnum( $constant )
    {
-      return new Axis ( $constant );
+      return new Axis ($constant);
    }
 }

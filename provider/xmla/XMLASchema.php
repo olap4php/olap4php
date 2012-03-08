@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -48,32 +48,32 @@ class XMLASchema implements ISchema
     * Constructor
     *
     * @param $catalog The schema's catalog
-    * @param $name The name of the schema
-    * 
+    * @param $name    The name of the schema
+    *
     */
-   public function __construct ( XMLACatalog $catalog, $name )
+   public function __construct( XMLACatalog $catalog, $name )
    {
-      if ( $catalog == null ) throw new InvalidArgumentException ( 'Catalog cannot be null.' );
-      if ( $name == null )    throw new InvalidArgumentException ( 'Name cannot be null.' );
+      if ( $catalog == null ) throw new InvalidArgumentException ('Catalog cannot be null.');
+      if ( $name == null ) throw new InvalidArgumentException ('Name cannot be null.');
 
       $this->catalog = $catalog;
-      $this->name = $name;
+      $this->name    = $name;
 
       // Lazying loading ...
       $this->cubes = new LazyMetadataList(
-              new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_CUBES ),
-              new XMLAConnectionContext(
-                      $this->catalog->getMetaData()->getConnection(),
-                      $this->catalog->getMetaData(),
-                      $this->catalog,
-                      $this,
-                      NULL, NULL, NULL, NULL ),
-              new XMLACubeHandler() );
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_CUBES),
+         new XMLAConnectionContext(
+            $this->catalog->getMetaData()->getConnection(),
+            $this->catalog->getMetaData(),
+            $this->catalog,
+            $this,
+            NULL, NULL, NULL, NULL),
+         new XMLACubeHandler());
    }
 
    public function hashCode()
    {
-      if ( empty( $this->hash ) )
+      if ( empty($this->hash) )
       {
          $this->hash = XMLAUtil::javaStringHashCode( $this->name );
       }
@@ -94,7 +94,7 @@ class XMLASchema implements ISchema
    /**
     * @return string
     */
-   public function getName ( )
+   public function getName()
    {
       return $this->name;
    }
@@ -102,7 +102,7 @@ class XMLASchema implements ISchema
    /**
     * @return XMLACatalog
     */
-   public function getCatalog ( )
+   public function getCatalog()
    {
       return $this->catalog;
    }

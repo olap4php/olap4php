@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -59,7 +59,7 @@ class XMLAMeasure extends XMLAMember implements IMeasure, INamed
     * @param $ordinal
     *
     */
-   public function __construct (
+   public function __construct(
       XMLALevel $level,
       $uniqueName,
       $name,
@@ -70,42 +70,42 @@ class XMLAMeasure extends XMLAMember implements IMeasure, INamed
       $datatype,
       $visible,
       $ordinal
-      )
+   )
    {
-      parent::__construct (
+      parent::__construct(
          $level,
          $uniqueName,
          $name,
          $caption,
          $description,
          $parentMemberUniqueName,
-         $aggregator == Aggregator::getEnum ( Aggregator::CALCULATED )
-            ? MemberType::getEnum ( MemberType::FORMULA )
-            : MemberType::getEnum ( MemberType::MEASURE ),
+         $aggregator == Aggregator::getEnum( Aggregator::CALCULATED )
+            ? MemberType::getEnum( MemberType::FORMULA )
+            : MemberType::getEnum( MemberType::MEASURE ),
          0,
          $ordinal,
-         array ( )
+         array()
       );
 
-      assert ( $level->getHierarchy ( )->getDimension ( )->getDimensionType ( )
-               == DimensionType::getEnum ( DimensionType::MEASURE ) );
+      assert( $level->getHierarchy()->getDimension()->getDimensionType()
+                 == DimensionType::getEnum( DimensionType::MEASURE ) );
 
       $this->aggregator = $aggregator;
-      $this->datatype = $datatype;
-      $this->visible = $visible;
+      $this->datatype   = $datatype;
+      $this->visible    = $visible;
    }
 
-   public function getAggregator ( )
+   public function getAggregator()
    {
       return $this->aggregator;
    }
 
-   public function getDatatype ( )
+   public function getDatatype()
    {
       return $this->datatype;
    }
 
-   public function isVisible ( )
+   public function isVisible()
    {
       return $this->visible;
    }

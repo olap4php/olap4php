@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -33,7 +33,7 @@ use OLAP4PHP\Provider\Caching\IXMLACache;
  * @author paulb
  */
 class MCache extends \Memcached implements IXMLACache
-{   
+{
    /**
     * Will store the value within the cache under the specified key. The expiration
     * parameter can be used to control when the value is considered expired in the cache.
@@ -42,7 +42,7 @@ class MCache extends \Memcached implements IXMLACache
    {
       return parent::set( $key, $value, $expiration );
    }
-   
+
    /**
     * Returns the item that was stored in the cache under the given key. This
     * returns the value stored in the cache or FALSE otherwise
@@ -51,7 +51,7 @@ class MCache extends \Memcached implements IXMLACache
    {
       return parent::get( $key );
    }
-   
+
    /**
     * Deletes the key from the cache. Once the item has been marked as deleted, it
     * can no longer be accessed in the cache
@@ -60,7 +60,7 @@ class MCache extends \Memcached implements IXMLACache
    {
       return parent::delete( $key );
    }
-   
+
    //TODO:
    // Should expose a hasValue method which will get the value and return the getResult
    // Code() value. This will cache the value locally if found, since logically, the

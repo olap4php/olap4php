@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -48,10 +48,10 @@ interface IOLAPDatabaseMetaData
    public function getSupportedCellSetListenerGranularities();
 
    public function getActions(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $actionNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $actionNamePattern = null );
 
    public function getDatasources();
 
@@ -62,66 +62,66 @@ interface IOLAPDatabaseMetaData
       $propertyNamePattern );
 
    public function getProperties(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $dimensionUniqueName,
-      $hierarchyUniqueName,
-      $levelUniqueName,
-      $memberUniqueName,
-      $propertyNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $dimensionUniqueName = null,
+      $hierarchyUniqueName = null,
+      $levelUniqueName = null,
+      $memberUniqueName = null,
+      $propertyNamePattern = null );
 
    public function getMdxKeywords();
 
    public function getCubes(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null );
 
    public function getDimensions(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $dimensionNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $dimensionNamePattern = null );
 
    public function getOlapFunctions(
-      $functionNamePattern );
+      $functionNamePattern = null );
 
    public function getHierarchies(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $dimensionUniqueName,
-      $hierarchyNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $dimensionUniqueName = null,
+      $hierarchyNamePattern = null );
 
    public function getLevels(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $dimensionUniqueName,
-      $hierarchyUniqueName,
-      $levelNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $dimensionUniqueName = null,
+      $hierarchyUniqueName = null,
+      $levelNamePattern = null );
 
    public function getMeasures(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $measureNamePattern,
-      $measureUniqueName );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $measureNamePattern = null,
+      $measureUniqueName = null );
 
    public function getMembers(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $dimensionUniqueName,
-      $hierarchyUniqueName,
-      $levelUniqueName,
-      $memberUniqueName,
-      array $treeOps );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $dimensionUniqueName = null,
+      $hierarchyUniqueName = null,
+      $levelUniqueName = null,
+      $memberUniqueName = null,
+      array $treeOps = array() );
 
    public function getSets(
-      $catalog,
-      $schemaPattern,
-      $cubeNamePattern,
-      $setNamePattern );
+      $catalog = null,
+      $schemaPattern = null,
+      $cubeNamePattern = null,
+      $setNamePattern = null );
 }

@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -42,27 +42,27 @@ class XMLAHierarchyHandler extends XMLAMetadataHandler
 
    public function __construct( XMLACube &$cube )
    {
-      if ( empty( $cube ) || $cube == NULL ) throw new OLAPException( 'XMLAHierarchyMetadataHandler: $cube cannot be NULL' );
+      if ( empty($cube) || $cube == NULL ) throw new OLAPException('XMLAHierarchyMetadataHandler: $cube cannot be NULL');
       $this->cube = &$cube;
    }
 
    public function handle( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
    {
-      $hierarchyUniqueName = XMLAUtil::stringElement( $row, 'HIERARCHY_UNIQUE_NAME' );
-      $hierarchyName = ( XMLAUtil::stringElement( $row, 'HIERARCHY_NAME' ) == NULL ) ? str_replace( array( '[', ']' ), array( '', '' ), $hierarchyUniqueName ) : XMLAUtil::stringElement( $row, 'HIERARCHY_NAME' );
-      $hierarchyCaption = XMLAUtil::stringElement( $row, 'HIERARCHY_CAPTION' );
-      $description = XMLAUtil::stringElement( $row, 'DESCRIPTION' );
-      $allMember = XMLAUtil::stringElement( $row, 'ALL_MEMBER' );
+      $hierarchyUniqueName     = XMLAUtil::stringElement( $row, 'HIERARCHY_UNIQUE_NAME' );
+      $hierarchyName           = (XMLAUtil::stringElement( $row, 'HIERARCHY_NAME' ) == NULL) ? str_replace( array( '[', ']' ), array( '', '' ), $hierarchyUniqueName ) : XMLAUtil::stringElement( $row, 'HIERARCHY_NAME' );
+      $hierarchyCaption        = XMLAUtil::stringElement( $row, 'HIERARCHY_CAPTION' );
+      $description             = XMLAUtil::stringElement( $row, 'DESCRIPTION' );
+      $allMember               = XMLAUtil::stringElement( $row, 'ALL_MEMBER' );
       $defaultMemberUniqueName = XMLAUtil::stringElement( $row, 'DEFAULT_MEMBER' );
 
       $hierarchy = new XMLAHierarchy(
-              $context->getDimension( $row ),
-              $hierarchyUniqueName,
-              $hierarchyName,
-              $hierarchyCaption,
-              $description,
-              $allMember != NULL,
-              $defaultMemberUniqueName);
+         $context->getDimension( $row ),
+         $hierarchyUniqueName,
+         $hierarchyName,
+         $hierarchyCaption,
+         $description,
+         $allMember != NULL,
+         $defaultMemberUniqueName);
 
       $list->add( $hierarchy );
 

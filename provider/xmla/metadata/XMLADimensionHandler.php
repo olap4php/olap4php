@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -42,30 +42,30 @@ class XMLADimensionHandler extends XMLAMetadataHandler
 
    public function __construct( XMLACube $cube )
    {
-      if ( empty( $cube ) || $cube == NULL ) throw new OLAPException( 'XMLADimensionMetadataHandler: $cube cannot be NULL' );
+      if ( empty($cube) || $cube == NULL ) throw new OLAPException('XMLADimensionMetadataHandler: $cube cannot be NULL');
       $this->cube = $cube;
    }
 
    public function handle( \DOMElement $row, XMLAConnectionContext $context, NamedList $list )
    {
-      $dimensionName = XMLAUtil::stringElement( $row, 'DIMENSION_NAME' );
-      $dimensionUniqueName = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
-      $dimensionCaption = XMLAUtil::stringElement( $row, 'DIMENSION_CAPTION' );
-      $description = XMLAUtil::stringElement( $row, 'DESCRIPTION' );
-      $dimensionType = XMLAUtil::integerElement( $row, 'DIMENSION_TYPE' );
-      $type = DimensionType::getDictionary()->forOrdinal( $dimensionType );
+      $dimensionName              = XMLAUtil::stringElement( $row, 'DIMENSION_NAME' );
+      $dimensionUniqueName        = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
+      $dimensionCaption           = XMLAUtil::stringElement( $row, 'DIMENSION_CAPTION' );
+      $description                = XMLAUtil::stringElement( $row, 'DESCRIPTION' );
+      $dimensionType              = XMLAUtil::integerElement( $row, 'DIMENSION_TYPE' );
+      $type                       = DimensionType::getDictionary()->forOrdinal( $dimensionType );
       $defaultHierarchyUniqueName = XMLAUtil::stringElement( $row, 'DEFAULT_HIERARCHY' );
-      $dimensionOrdinal = XMLAUtil::integerElement( $row, 'DIMENSION_ORDINAL' );
+      $dimensionOrdinal           = XMLAUtil::integerElement( $row, 'DIMENSION_ORDINAL' );
 
       $dimension = new XMLADimension(
-              $this->cube,
-              $dimensionUniqueName,
-              $dimensionName,
-              $dimensionCaption,
-              $description,
-              $type,
-              $defaultHierarchyUniqueName,
-              $dimensionOrdinal == NULL ? 0 : $dimensionOrdinal);
+         $this->cube,
+         $dimensionUniqueName,
+         $dimensionName,
+         $dimensionCaption,
+         $description,
+         $type,
+         $defaultHierarchyUniqueName,
+         $dimensionOrdinal == NULL ? 0 : $dimensionOrdinal);
 
       $list->add( $dimension );
 

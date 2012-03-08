@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -41,46 +41,46 @@ class XMLACellProperty implements IProperty, INamed
    private $tag;
    private $propertyName;
 
-   public function __construct (
-        $tag,
-        $propertyName )
+   public function __construct(
+      $tag,
+      $propertyName )
    {
-      $this->tag = $tag;
+      $this->tag          = $tag;
       $this->propertyName = $propertyName;
    }
 
-   public function getDatatype ( )
+   public function getDatatype()
    {
-      return DataType::getEnum ( DataType::STRING );
+      return DataType::getEnum( DataType::STRING );
    }
 
-   public function getType ( )
+   public function getType()
    {
-      return PropertyType::getEnum ( PropertyType::CELL );
+      return PropertyType::getEnum( PropertyType::CELL );
    }
 
-   public function getName ( )
-   {
-      return $this->propertyName;
-   }
-
-   public function getUniqueName ( )
+   public function getName()
    {
       return $this->propertyName;
    }
 
-   public function getCaption ( )
+   public function getUniqueName()
    {
       return $this->propertyName;
    }
 
-   public function getDescription ( )
+   public function getCaption()
+   {
+      return $this->propertyName;
+   }
+
+   public function getDescription()
    {
       return "";
    }
 
-   public function getContentType ( )
+   public function getContentType()
    {
-      return PropertyContentType::getEnum ( PropertyContentType::REGULAR );
+      return PropertyContentType::getEnum( PropertyContentType::REGULAR );
    }
 }

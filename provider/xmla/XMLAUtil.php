@@ -258,4 +258,16 @@ abstract class XMLAUtil
       $elements = explode( '.', $uniqueName );
       return str_replace( array( '[', ']' ), '', $elements[0] );
    }
+
+   /**
+    * Gets the current system time as a float
+    *
+    * @static
+    * @return float
+    */
+   public static function microtimeFloat()
+   {
+      list ($usec, $sec) = explode( " ", microtime() );
+      return ((float)$usec + (float)$sec);
+   }
 }

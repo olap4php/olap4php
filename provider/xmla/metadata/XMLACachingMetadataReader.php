@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -37,10 +37,10 @@ use OLAP4PHP\Provider\XMLA\XMLALevel;
 class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
 {
    /// string => XMLAMeasure
-   private $measureMap = array ( );
+   private $measureMap = array();
 
    /// string => XMLAMember
-   private $memberMap = array ( );
+   private $memberMap = array();
 
    /* park this one
    private final Map<
@@ -52,19 +52,23 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
 
    /**
     * Constructor
-    * 
+    *
     * @param IXMLAMetadataReader $metadataReader
-    * @param array $measureMap
+    * @param array               $measureMap
     *
     */
-   public function __construct ( IXMLAMetadataReader $metadataReader, array $measureMap = NULL )
+   public function __construct( IXMLAMetadataReader $metadataReader, array $measureMap = NULL )
    {
-      parent::__construct ( $metadataReader );
+      parent::__construct( $metadataReader );
 
       if ( !$measureMap )
+      {
          $this->measureMap = array();
+      }
       else
+      {
          $this->measureMap = $measureMap;
+      }
    }
 
 
@@ -72,30 +76,32 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
     * Looks up a member by its unique name.
     *
     * @param string $memberUniqueName Unique name of member
+    *
     * @return XMLAMember, or null if not found
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberByUniqueName ( $memberUniqueName )
+   public function lookupMemberByUniqueName( $memberUniqueName )
    {
       // First, look in measures map.
-      if ( isset ( $this->measureMap [ $memberUniqueName ] ) )
+      if ( isset ($this->measureMap [$memberUniqueName]) )
       {
-         return $this->measureMap [ $memberUniqueName ];
+         return $this->measureMap [$memberUniqueName];
       }
 
       // Next, look in the member cache.
-      if ( isset ( $this->memberMap [ $memberUniqueName ] ) )
+      if ( isset ($this->memberMap [$memberUniqueName]) )
       {
-         return $this->memberMap [ $memberUniqueName ];
+         return $this->memberMap [$memberUniqueName];
       }
 
       // Next, pass the lookup up the reader composition
-      $member = parent::lookupMemberByUniqueName ( $memberUniqueName );
-      if (   $member != null
-          && $member->getDimension()->getDimensionType ( )
-                !== DimensionType::getEnum ( DimensionType::MEASURE ) )
+      $member = parent::lookupMemberByUniqueName( $memberUniqueName );
+      if ( $member != null
+         && $member->getDimension()->getDimensionType()
+            !== DimensionType::getEnum( DimensionType::MEASURE )
+      )
       {
-          $this->memberMap [ $memberUniqueName ] = $member;
+         $this->memberMap [$memberUniqueName] = $member;
       }
 
       return $member;
@@ -108,26 +114,26 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
     *
     * @param array $memberUniqueNames List of unique names of member
     *
-    * @param array $memberMap Map to populate with members
+    * @param array $memberMap         Map to populate with members
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMembersByUniqueName ( array $memberUniqueNames, array& $memberMap )
+   public function lookupMembersByUniqueName( array $memberUniqueNames, array& $memberMap )
    {
-      $remainingMemberUniqueNames = array ( );
+      $remainingMemberUniqueNames = array();
       foreach ( $memberUniqueNames as $memberUniqueName )
       {
          // First, look in measures map.
-         if ( isset ( $this->measureMap [ $memberUniqueName ] ) )
+         if ( isset ($this->measureMap [$memberUniqueName]) )
          {
-            $memberMap [ $memberUniqueName ] = $this->measureMap [ $memberUniqueName ];
+            $memberMap [$memberUniqueName] = $this->measureMap [$memberUniqueName];
             continue;
          }
 
          // Next, look in cache.
-         if ( isset ( $this->memberMap [ $memberUniqueName ] ) )
+         if ( isset ($this->memberMap [$memberUniqueName]) )
          {
-            $memberMap [ $memberUniqueName ] = $this->memberMap [ $memberUniqueName ];
+            $memberMap [$memberUniqueName] = $this->memberMap [$memberUniqueName];
             continue;
          }
 
@@ -136,21 +142,22 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
 
       // If any of the member names were not in the cache, look them up
       // by delegating.
-      if ( ! empty ( $remainingMemberUniqueNames ) )
+      if ( !empty ($remainingMemberUniqueNames) )
       {
-         parent::lookupMembersByUniqueName ( $remainingMemberUniqueNames, $memberMap );
+         parent::lookupMembersByUniqueName( $remainingMemberUniqueNames, $memberMap );
 
          // Add the previously missing members into the cache.
          foreach ( $remainingMemberUniqueNames as $memberName )
          {
-            if ( isset ( $memberMap [ $memberName ] ) )
+            if ( isset ($memberMap [$memberName]) )
             {
-               $member = $memberMap [ $memberName ];
+               $member = $memberMap [$memberName];
 
-               if ( ! ( $member instanceof IMeasure )
-                    && $member->getDimension ( )->getDimensionType ( )->getConstant ( ) != DimensionType::MEASURE )
+               if ( !($member instanceof IMeasure)
+                  && $member->getDimension()->getDimensionType()->getConstant() != DimensionType::MEASURE
+               )
                {
-                  $this->memberMap [ $memberName ] = $member;
+                  $this->memberMap [$memberName] = $member;
                }
             }
          }
@@ -162,19 +169,19 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
     * Looks a member by its unique name and returns members related by
     * the specified tree-operations.
     *
-    * @param array treeOps Collection of tree operations to travel relative to
-    * given member in order to create list of members
+    * @param array  treeOps Collection of tree operations to travel relative to
+    *               given member in order to create list of members
     *
     * @param string memberUniqueName Unique name of member
     *
-    * @param array IMember List to be populated with members related to the given
-    * member, or empty set if the member is not found
+    * @param array  IMember List to be populated with members related to the given
+    *               member, or empty set if the member is not found
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberRelatives ( array $treeOps, $memberUniqueName, NamedList $list )
+   public function lookupMemberRelatives( array $treeOps, $memberUniqueName, NamedList $list )
    {
-      throw new \BadMethodCallException ( 'Note yet implemented' );
+      throw new \BadMethodCallException ('Note yet implemented');
    }
 
    /**
@@ -186,8 +193,8 @@ class XMLACachingMetadataReader extends XMLADelegatingMetadataReader
     *
     * @return array of members at in the level
     */
-   public function getLevelMembers ( XMLALevel $level )
+   public function getLevelMembers( XMLALevel $level )
    {
-      throw new \BadMethodCallException ( 'Note yet implemented' );
+      throw new \BadMethodCallException ('Note yet implemented');
    }
 }

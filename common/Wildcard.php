@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -26,6 +26,7 @@
 namespace OLAP4PHP\Common;
 
 use OLAP4PHP\OLAP\OLAPException;
+
 /**
  * @brief Holds a Wildcard pattern
  */
@@ -43,14 +44,14 @@ class Wildcard
     */
    public function __construct( $pattern )
    {
-      if ( empty( $pattern ) ) throw new OLAPException( 'Cannot create an empty Wildcard pattern' );
+      if ( empty($pattern) ) throw new OLAPException('Cannot create an empty Wildcard pattern');
 
       $this->pattern = $pattern;
    }
 
    /**
     * @brief Returns the wildcard pattern
-    * 
+    *
     * @return string
     */
    public function getPattern()

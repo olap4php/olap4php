@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -26,8 +26,8 @@
 namespace OLAP4PHP\Provider\XMLA;
 
 // Interfaces
-use OLAP4PHP\MetaData\IProperty;
-use OLAP4PHP\OLAP\MetaData\INamed;
+use OLAP4PHP\Metadata\IProperty;
+use OLAP4PHP\Metadata\INamed;
 
 // Classes
 use OLAP4PHP\Metadata\DataType;
@@ -47,15 +47,15 @@ class XMLAProperty extends XMLAElement implements IProperty, INamed
    /**
     * Constructor
     *
-    * @param string $uniqueName
-    * @param string $name
-    * @param string $caption
-    * @param string $description
-    * @param Datatype $datatype
-    * @param array PropertyType $type
+    * @param string              $uniqueName
+    * @param string              $name
+    * @param string              $caption
+    * @param string              $description
+    * @param Datatype            $datatype
+    * @param                     array               PropertyType $type
     * @param PropertyContentType $contentType
     */
-   public function __construct (
+   public function __construct(
       $uniqueName,
       $name,
       $caption,
@@ -63,20 +63,20 @@ class XMLAProperty extends XMLAElement implements IProperty, INamed
       DataType $datatype,
       PropertyType $type,
       PropertyContentType $contentType
-      )
+   )
    {
-      parent::__construct ( $uniqueName, $name, $caption, $description );
+      parent::__construct( $uniqueName, $name, $caption, $description );
       $this->contentType = $contentType;
-      assert ( $datatype != null );
-      assert ( $type != null );
+      assert( $datatype != null );
+      assert( $type != null );
       $this->datatype = $datatype;
-      $this->type = $type;
+      $this->type     = $type;
    }
 
    /**
     * @return DataType
     */
-   public function getDatatype ( )
+   public function getDatatype()
    {
       return $this->datatype;
    }
@@ -84,7 +84,7 @@ class XMLAProperty extends XMLAElement implements IProperty, INamed
    /**
     * @return PropertyType
     */
-   public function getType ( )
+   public function getType()
    {
       return $this->type;
    }
@@ -92,7 +92,7 @@ class XMLAProperty extends XMLAElement implements IProperty, INamed
    /**
     * @return PropertyContentType
     */
-   public function getContentType ( )
+   public function getContentType()
    {
       return $this->contentType;
    }

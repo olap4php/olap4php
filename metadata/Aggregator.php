@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -32,15 +32,15 @@ use OLAP4PHP\Metadata\Dictionary;
 
 class Aggregator implements IEnum
 {
-   const SUM         = 0;
-   const COUNT       = 1;
-   const MIN         = 2;
-   const MAX         = 3;
-   const AVG         = 4;
-   const XVAR        = 5;
-   const STD         = 6;
-   const CALCULATED  = 7;
-   const UNKNOWN     = 8;
+   const SUM        = 0;
+   const COUNT      = 1;
+   const MIN        = 2;
+   const MAX        = 3;
+   const AVG        = 4;
+   const XVAR       = 5;
+   const STD        = 6;
+   const CALCULATED = 7;
+   const UNKNOWN    = 8;
 
    private $name;
    private $xmlaOrdinal;
@@ -53,52 +53,52 @@ class Aggregator implements IEnum
       switch ( $aggregatorType )
       {
          case self::SUM:
-            $this->name = 'SUM';
+            $this->name        = 'SUM';
             $this->xmlaOrdinal = 1;
             break;
 
          case self::COUNT:
-            $this->name = 'COUNT';
+            $this->name        = 'COUNT';
             $this->xmlaOrdinal = 2;
             break;
 
          case self::MIN:
-            $this->name = 'MIN';
+            $this->name        = 'MIN';
             $this->xmlaOrdinal = 3;
             break;
 
          case self::MAX:
-            $this->name = 'MAX';
+            $this->name        = 'MAX';
             $this->xmlaOrdinal = 4;
             break;
 
          case self::AVG:
-            $this->name = 'AVG';
+            $this->name        = 'AVG';
             $this->xmlaOrdinal = 5;
             break;
 
          case self::XVAR:
-            $this->name = 'VAR';
+            $this->name        = 'VAR';
             $this->xmlaOrdinal = 6;
             break;
 
          case self::STD:
-            $this->name = 'STD';
+            $this->name        = 'STD';
             $this->xmlaOrdinal = 7;
             break;
 
          case self::CALCULATED:
-            $this->name = 'CALCULATED';
+            $this->name        = 'CALCULATED';
             $this->xmlaOrdinal = 127;
             break;
 
          case self::UNKNOWN:
-            $this->name = 'UNKNOWN';
+            $this->name        = 'UNKNOWN';
             $this->xmlaOrdinal = 0;
             break;
 
          default:
-            throw new OLAPException( "Aggregator type $aggregatorType not supported." );
+            throw new OLAPException("Aggregator type $aggregatorType not supported.");
       }
    }
 
@@ -107,15 +107,15 @@ class Aggregator implements IEnum
       if ( !self::$constants )
       {
          self::$constants = array(
-             new Aggregator( self::SUM ),
-             new Aggregator( self::COUNT ),
-             new Aggregator( self::MIN ),
-             new Aggregator( self::MAX ),
-             new Aggregator( self::AVG ),
-             new Aggregator( self::XVAR ),
-             new Aggregator( self::STD ),
-             new Aggregator( self::CALCULATED ),
-             new Aggregator( self::UNKNOWN )
+            new Aggregator(self::SUM),
+            new Aggregator(self::COUNT),
+            new Aggregator(self::MIN),
+            new Aggregator(self::MAX),
+            new Aggregator(self::AVG),
+            new Aggregator(self::XVAR),
+            new Aggregator(self::STD),
+            new Aggregator(self::CALCULATED),
+            new Aggregator(self::UNKNOWN)
          );
       }
 
@@ -124,18 +124,22 @@ class Aggregator implements IEnum
 
    public static function getEnum( $constant )
    {
-      if ( !self::$constants ) self::getEnumConstants ( );
+      if ( !self::$constants ) self::getEnumConstants();
 
-      if ( !isset( self::$constants[ $constant ] ) )
-         throw new \InvalidArgumentException ( 'Invalid Aggregator Constant' );
+      if ( !isset(self::$constants[$constant]) )
+      {
+         throw new \InvalidArgumentException ('Invalid Aggregator Constant');
+      }
 
-      return self::$constants[ $constant ];
+      return self::$constants[$constant];
    }
 
    public static function getDictionary()
    {
       if ( !self::$dictionary )
-         self::$dictionary = new Dictionary( $this );
+      {
+         self::$dictionary = new Dictionary($this);
+      }
 
       return self::$dictionary;
    }

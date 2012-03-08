@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -35,35 +35,39 @@ interface IXMLAConstantDictionary
     * specification, or null if there is no such.
     *
     * @param integer $xmlaOrdinal XMLA ordinal
+    *
     * @return Enumeration value
     */
-   public function forOrdinal ( $xmlaOrdinal );
+   public function forOrdinal( $xmlaOrdinal );
 
    /**
     * Returns the enumeration value with the given name in the XMLA
     * specification, or null if there is no such.
     *
     * @param string $xmlaName XMLA name
+    *
     * @return Enumeration value
     */
-   public function forName ( $xmlaName );
+   public function forName( $xmlaName );
 
    /**
     * Creates a set of values by parsing a mask.
     *
     * @param integer $xmlaOrdinalMask Bit mask
+    *
     * @return array Set of E values
     */
-   public function forMask ( $xmlaOrdinalMask );
+   public function forMask( $xmlaOrdinalMask );
 
    /**
     * Converts a set of enum values to an integer by logical OR-ing their
     * codes.
     *
     * @param array $set Set of enum values
+    *
     * @return integer Bitmap representing set of enum values
     */
-   public function toMask ( array $set );
+   public function toMask( array $set );
 
    /**
     * Returns all values of the enum.
@@ -74,13 +78,13 @@ interface IXMLAConstantDictionary
     *
     * @return array List of enum values
     */
-   public function getValues ( );
+   public function getValues();
 
    /**
     * Returns the class that the enum values belong to.
     *
-    * @return object 
+    * @return object
     */
-   public function getEnumClass ( );
+   public function getEnumClass();
 
 }

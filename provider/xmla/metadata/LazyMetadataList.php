@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -41,9 +41,9 @@ use OLAP4PHP\Common\NamedList;
  */
 class LazyMetadataList extends NamedList
 {
-   const STATE_NEW         = 1;
-   const STATE_POPULATING  = 2;
-   const STATE_POPULATED   = 3;
+   const STATE_NEW        = 1;
+   const STATE_POPULATING = 2;
+   const STATE_POPULATED  = 3;
 
    private $state;
 
@@ -57,15 +57,19 @@ class LazyMetadataList extends NamedList
 
    public function __construct( XMLAMetadataRequest $metadataRequest, XMLAConnectionContext $context, IXMLAMetadataHandler $handler, array $restrictions = NULL )
    {
-      $this->state = self::STATE_NEW;
+      $this->state           = self::STATE_NEW;
       $this->metadataRequest = $metadataRequest;
-      $this->context = $context;
-      $this->handler = $handler;
+      $this->context         = $context;
+      $this->handler         = $handler;
 
       if ( !$restrictions )
+      {
          $this->restrictions = array();
+      }
       else
+      {
          $this->restrictions = $restrictions;
+      }
    }
 
    private function getList()
@@ -73,19 +77,19 @@ class LazyMetadataList extends NamedList
       switch ( $this->state )
       {
          case self::STATE_POPULATING:
-            throw new \Exception( 'Recursive Population: ' );
+            throw new \Exception('Recursive Population: ');
          case self::STATE_NEW:
             //print 'STATE NEW' . PHP_EOL;
             try
             {
                $this->state = self::STATE_POPULATING;
-               $this->populateList( );
+               $this->populateList();
                $this->state = self::STATE_POPULATED;
             }
             catch ( OLAPException $e )
             {
                $this->state = self::STATE_NEW;
-               throw new \Exception( $e->getMessage() );
+               throw new \Exception($e->getMessage());
             }
          case self::STATE_POPULATED:
          default:
@@ -94,10 +98,12 @@ class LazyMetadataList extends NamedList
       }
    }
 
-   public function get ( $index )
+   public function get( $index )
    {
       if ( $this->state == self::STATE_NEW )
-         $this->getList ( );
+      {
+         $this->getList();
+      }
 
       return parent::get( $index );
 
@@ -130,7 +136,9 @@ class LazyMetadataList extends NamedList
    public function indexOfName( $name )
    {
       if ( $this->state == self::STATE_NEW )
-              $this->getList();
+      {
+         $this->getList();
+      }
 
       return parent::indexOfName( $name );
       /*
@@ -144,24 +152,26 @@ class LazyMetadataList extends NamedList
        */
    }
 
-   public function size ( )
+   public function size()
    {
       //if ( !parent::count () )
       if ( $this->state == self::STATE_NEW )
-         $this->getList ( );
-      return parent::size ( );
+      {
+         $this->getList();
+      }
+      return parent::size();
    }
 
-   protected function populateList( )
+   protected function populateList()
    {
       //print 'LML::populateList' . PHP_EOL;
       $this->context->xmlaConnection
-         ->populateList (
-            $this,
-            $this->context,
-            $this->metadataRequest,
-            $this->handler,
-            $this->restrictions );
+         ->populateList(
+         $this,
+         $this->context,
+         $this->metadataRequest,
+         $this->handler,
+         $this->restrictions );
 
       //var_dump( $list );
    }

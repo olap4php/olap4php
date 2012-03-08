@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -53,12 +53,13 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    private $propertyValueMap;
    private $type;
    private $hash;
-   /// array [ IProperty ] => Object 
+
+   /// array [ IProperty ] => Object
 
    /**
     * Constructor
     */
-   public function __construct (
+   public function __construct(
       XMLALevel $level,
       $uniqueName,
       $name,
@@ -69,22 +70,22 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
       $childMemberCount,
       $ordinal,
       array $propertyValueMap
-      )
+   )
    {
-      parent::__construct ( $uniqueName, $name, $caption, $description );
+      parent::__construct( $uniqueName, $name, $caption, $description );
       $this->ordinal = $ordinal;
-      assert ( $level != null );
-      assert ( $type != null );
-      $this->level = $level;
+      assert( $level != null );
+      assert( $type != null );
+      $this->level                  = $level;
       $this->parentMemberUniqueName = $parentMemberUniqueName;
-      $this->type = $type;
-      $this->childMemberCount = $childMemberCount;
-      $this->propertyValueMap = $propertyValueMap;
+      $this->type                   = $type;
+      $this->childMemberCount       = $childMemberCount;
+      $this->propertyValueMap       = $propertyValueMap;
    }
 
    public function hashCode()
    {
-      if ( empty( $this->hash ) ) $this->hash = XMLAUtil::javaStringHashCode ( $this->uniqueName );
+      if ( empty($this->hash) ) $this->hash = XMLAUtil::javaStringHashCode( $this->uniqueName );
       return $this->hash;
    }
 
@@ -101,14 +102,14 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return array XMLAMember
     */
-   public function getAncestorMembers ( )
+   public function getAncestorMembers()
    {
       $list = array();
-      $m = $this->getParentMember();
+      $m    = $this->getParentMember();
       while ( $m != NULL )
       {
          $list[] = $m;
-         $m = $m->getParentMember();
+         $m      = $m->getParentMember();
       }
 
       return $list;
@@ -118,7 +119,7 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return int
     */
-   public function getChildMemberCount ( )
+   public function getChildMemberCount()
    {
       return $this->childMemberCount;
    }
@@ -127,18 +128,18 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return NamedList
     */
-   public function getChildMembers ( )
+   public function getChildMembers()
    {
       $list = new NamedList();
       $cube = $this->getCube();
-      $cube->getMetadataReader()->lookupMemberRelatives( new XMLATreeOp( XMLATreeOp::CHILDREN ), $this->uniqueName, $list );
+      $cube->getMetadataReader()->lookupMemberRelatives( new XMLATreeOp(XMLATreeOp::CHILDREN), $this->uniqueName, $list );
       return $list;
    }
 
    /**
     * @return XMLADimension
     */
-   public function getDimension ( )
+   public function getDimension()
    {
       return $this->level->getHierarchy()->getDimension();
    }
@@ -147,7 +148,7 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return XMLAHierarchy
     */
-   public function getHierarchy ( )
+   public function getHierarchy()
    {
       return $this->level->getHierarchy();
    }
@@ -156,7 +157,7 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return XMLALevel
     */
-   public function getLevel ( )
+   public function getLevel()
    {
       return $this->level;
    }
@@ -165,7 +166,7 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return MemberType
     */
-   public function getMemberType ( )
+   public function getMemberType()
    {
       return $this->type;
    }
@@ -174,11 +175,11 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
    /**
     * @return XMLAMember
     */
-   public function getParentMember ( )
+   public function getParentMember()
    {
-      if ( empty( $this->parentMemberUniqueName ) ) return NULL;
+      if ( empty($this->parentMemberUniqueName) ) return NULL;
 
-      if ( empty( $this->parentMember ) )
+      if ( empty($this->parentMember) )
       {
          $this->parentMember = $this->getCube()->getMetadataReader()->lookupMemberByUniqueName( $this->parentMemberUniqueName );
       }
@@ -211,14 +212,15 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
 
    /**
     *
-    * @param string $property
+    * @param string     $property
     * @param XMLAMember $member
-    * @param array $map
+    * @param array      $map
+    *
     * @return mixed
     */
    protected function _getPropertyValue( $property, XMLAMember $member, array $map )
    {
-      if ( isset( $map[$property] ) ) return $map[$property];
+      if ( isset($map[$property]) ) return $map[$property];
 
       switch ( $property )
       {
@@ -274,10 +276,10 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
             return 1;
 
          case 'PARENT_LEVEL':
-            return ( $member->getParentMember() == NULL ) ? 0 : $member->getParentMember()->getDepth();
+            return ($member->getParentMember() == NULL) ? 0 : $member->getParentMember()->getDepth();
 
          case 'PARENT_UNIQUE_NAME':
-            return ( $member->getParentMember() == NULL ) ? NULL : $member->getParentMember()->getUniqueName();
+            return ($member->getParentMember() == NULL) ? NULL : $member->getParentMember()->getUniqueName();
 
          case 'SCHEMA_NAME':
             return $member->getCube()->getSchema()->getName();
@@ -354,7 +356,7 @@ class XMLAMember extends XMLAElement implements IXMLAMember, INamed
 
    public function getDataMember()
    {
-      
+
    }
 
    public function isHidden()

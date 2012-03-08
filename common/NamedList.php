@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -38,48 +38,54 @@ use \InvalidArgumentException;
  */
 class NamedList extends ArrayObject implements INamedList
 {
-   public function get ( $index )
+   public function get( $index )
    {
-      if ( parent::offsetExists( $index ) ) return parent::offsetGet ( $index );
+      if ( parent::offsetExists( $index ) ) return parent::offsetGet( $index );
 
       // trying to get by index
-      if ( is_string ( $index ) )
+      if ( is_string( $index ) )
       {
-         return parent::offsetExists ( $index ) ? parent::offsetGet ( $index ) : NULL;
+         return parent::offsetExists( $index ) ? parent::offsetGet( $index ) : NULL;
       }
-      else if ( is_numeric ( $index ) )
-      {
-         $index = (int) $index;
-         if ( $index < 0 || $index >= parent::count() ) return NULL;
+      else {
+         if ( is_numeric( $index ) )
+         {
+            $index = (int)$index;
+            if ( $index < 0 || $index >= parent::count() ) return NULL;
 
-         $indexedArray = array_values( parent::getArrayCopy() );
-         return $indexedArray[$index];
-         //return $obj;
+            $indexedArray = array_values( parent::getArrayCopy() );
+            return $indexedArray[$index];
+            //return $obj;
+         }
       }
 
-      throw new InvalidArgumentException ( "Index $index does not exist in NamedList." );
+      throw new InvalidArgumentException ("Index $index does not exist in NamedList.");
    }
 
 
-   public function indexOfName ( $name )
+   public function indexOfName( $name )
    {
       $indexedKeys = array_keys( parent::getArrayCopy() );
-      $key = array_search( $name, $indexedKeys );
+      $key         = array_search( $name, $indexedKeys );
       if ( $key !== FALSE )
+      {
          return $key;
+      }
       else
+      {
          return NULL;
+      }
    }
 
 
-   public function size ( )
+   public function size()
    {
-      return parent::count ( );
+      return parent::count();
    }
 
    public function add( INamed $obj )
    {
-      parent::offsetSet ( $obj->getName ( ), $obj );
+      parent::offsetSet( $obj->getName(), $obj );
    }
 
    /**
@@ -87,7 +93,7 @@ class NamedList extends ArrayObject implements INamedList
     *
     * @param ArrayObject $list
     */
-   public function addAll ( ArrayObject $list )
+   public function addAll( ArrayObject $list )
    {
       foreach ( $list as $key => $value )
       {

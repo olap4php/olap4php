@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -47,22 +47,22 @@ class XMLACellSetMetaData implements ICellSetMetaData
     * Constructor
     *
     * @param XMLAStatement $statement
-    * @param XMLACube $cube
-    * @param XMLACellSetAxisMetaData
-    * @param array $axisMetaDataList
-    * @param array $cellProperties
+    * @param XMLACube      $cube
+    * @param               XMLACellSetAxisMetaData
+    * @param array         $axisMetaDataList
+    * @param array         $cellProperties
     */
-   public function __construct ( 
+   public function __construct(
       XMLAStatement $statement,
       XMLACube $cube,
       XMLACellSetAxisMetaData $filterAxisMetaData,
       array $axisMetaDataList,
       array $cellProperties )
    {
-      $this->cube = $cube;
+      $this->cube               = $cube;
       $this->filterAxisMetaData = $filterAxisMetaData;
-      $this->axisMetaDataList = $axisMetaDataList;
-      $this->propertiesByTag = array ( );
+      $this->axisMetaDataList   = $axisMetaDataList;
+      $this->propertiesByTag    = array();
 
       foreach ( $cellProperties as $cellProperty )
       {
@@ -84,7 +84,7 @@ class XMLACellSetMetaData implements ICellSetMetaData
    /**
     * @return array ICellSetAxisMetaData
     */
-   public function getAxesMetaData ( )
+   public function getAxesMetaData()
    {
       return $this->axisMetaDataList;
    }
@@ -92,24 +92,24 @@ class XMLACellSetMetaData implements ICellSetMetaData
    /**
     * @return array IProperty
     */
-   public function getCellProperties ( )
+   public function getCellProperties()
    {
    }
 
    /**
-    * @return array 
+    * @return array
     */
-   public function getCellPropertiesByTag ( $tag )
+   public function getCellPropertiesByTag( $tag )
    {
-      return isset ( $this->propertiesByTag [ $tag ] )
-         ? $this->propertiesByTag [ $tag ]
+      return isset ($this->propertiesByTag [$tag])
+         ? $this->propertiesByTag [$tag]
          : null;
    }
 
    /**
     * @return ICube
     */
-   public function getCube ( )
+   public function getCube()
    {
       return $this->cube;
    }
@@ -118,8 +118,8 @@ class XMLACellSetMetaData implements ICellSetMetaData
    /**
     * @return ICellSetAxisMetaData
     */
-   public function getFilterAxisMetaData ( )
+   public function getFilterAxisMetaData()
    {
       return $this->filterAxisMetaData;
-   } 
+   }
 }

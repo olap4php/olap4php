@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -44,7 +44,7 @@ class XMLAMetadataReader implements IXMLAMetadataReader
    /**
     * Constructor
     */
-   public function __construct ( $cube )
+   public function __construct( $cube )
    {
       $this->cube = $cube;
    }
@@ -53,26 +53,27 @@ class XMLAMetadataReader implements IXMLAMetadataReader
     * Looks up a member by its unique name.
     *
     * @param string $memberUniqueName Unique name of member
+    *
     * @return XMLAMember, or null if not found
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberByUniqueName ( $memberUniqueName )
+   public function lookupMemberByUniqueName( $memberUniqueName )
    {
-      $list = new NamedList ( );
-      $this->lookupMemberRelatives (
-         array ( XMLATreeOp::getEnum ( XMLATreeOp::SELF ) ),
+      $list = new NamedList ();
+      $this->lookupMemberRelatives(
+         array( XMLATreeOp::getEnum( XMLATreeOp::SELF ) ),
          $memberUniqueName,
          $list );
 
-      switch ( $list->size ( ) )
+      switch ( $list->size() )
       {
          case 0:
             return null;
          case 1:
-            return $list->get ( 0 );
+            return $list->get( 0 );
          default:
             throw new \InvalidArgumentException (
-               "more than one member with unique name '".$memberUniqueName."'" );
+               "more than one member with unique name '" . $memberUniqueName . "'");
       }
    }
 
@@ -82,23 +83,23 @@ class XMLAMetadataReader implements IXMLAMetadataReader
     *
     * @param array $memberUniqueNames List of unique names of member
     *
-    * @param array $memberMap Map to populate with members
+    * @param array $memberMap         Map to populate with members
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMembersByUniqueName ( array $memberUniqueNames, array& $memberMap )
+   public function lookupMembersByUniqueName( array $memberUniqueNames, array& $memberMap )
    {
       // Iterates through member names
       foreach ( $memberUniqueNames as $memberName )
       {
          // Only lookup if it is not in the map yet
-         if ( !isset ( $memberMap [ $memberName ] ) )
+         if ( !isset ($memberMap [$memberName]) )
          {
-            $member = $this->lookupMemberByUniqueName ( $memberName );
+            $member = $this->lookupMemberByUniqueName( $memberName );
             // Null members might mean calculated members
             if ( $member != null )
             {
-               $memberMap [ $member->getUniqueName ( ) ] = $member;
+               $memberMap [$member->getUniqueName()] = $member;
             }
          }
       }
@@ -108,38 +109,38 @@ class XMLAMetadataReader implements IXMLAMetadataReader
     * Looks a member by its unique name and returns members related by
     * the specified tree-operations.
     *
-    * @param array treeOps Collection of tree operations to travel relative to
-    * given member in order to create list of members
+    * @param array  treeOps Collection of tree operations to travel relative to
+    *               given member in order to create list of members
     *
     * @param string memberUniqueName Unique name of member
     *
-    * @param array IMember List to be populated with members related to the given
-    * member, or empty set if the member is not found
+    * @param array  IMember List to be populated with members related to the given
+    *               member, or empty set if the member is not found
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberRelatives ( array $treeOps, $memberUniqueName, NamedList $list )
+   public function lookupMemberRelatives( array $treeOps, $memberUniqueName, NamedList $list )
    {
-      $context = XMLAConnectionContext::createAtGranule ( $this->cube, null, null, null );
+      $context    = XMLAConnectionContext::createAtGranule( $this->cube, null, null, null );
       $treeOpMask = 0;
 
       foreach ( $treeOps as $treeOp )
       {
-         $treeOpMask |= $treeOp->xmlaOrdinal ( );
+         $treeOpMask |= $treeOp->xmlaOrdinal();
       }
 
-      $this->cube->getSchema()->getCatalog()->getMetaData()->getConnection ( )
-         ->populateList (
-            $list,
-            $context,
-            new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_MEMBERS ),
-            new XMLAMemberHandler ( ),
-            array ( 'CATALOG_NAME' => $this->cube->getSchema()->getCatalog()->getName(),
-                    'SCHEMA_NAME' => $this->cube->getSchema()->getName(),
-                    'CUBE_NAME' => $this->cube->getName(),
-                    'MEMBER_UNIQUE_NAME' => $memberUniqueName,
-                    'TREE_OP' => $treeOpMask )
-            );
+      $this->cube->getSchema()->getCatalog()->getMetaData()->getConnection()
+         ->populateList(
+         $list,
+         $context,
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_MEMBERS),
+         new XMLAMemberHandler (),
+         array( 'CATALOG_NAME'       => $this->cube->getSchema()->getCatalog()->getName(),
+                'SCHEMA_NAME'        => $this->cube->getSchema()->getName(),
+                'CUBE_NAME'          => $this->cube->getName(),
+                'MEMBER_UNIQUE_NAME' => $memberUniqueName,
+                'TREE_OP'            => $treeOpMask )
+      );
    }
 
    /**
@@ -151,8 +152,8 @@ class XMLAMetadataReader implements IXMLAMetadataReader
     *
     * @return NamedList
     */
-   public function getLevelMembers ( XMLALevel $level )
+   public function getLevelMembers( XMLALevel $level )
    {
-      throw new \BadMethodCallException ( 'Not implemented yet' );
+      throw new \BadMethodCallException ('Not implemented yet');
    }
 }

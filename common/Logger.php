@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -42,33 +42,33 @@ class Logger
    /**
     * Construct a logger
     */
-   public function __construct ( $logger )
+   public function __construct( $logger )
    {
       $this->logger = $logger;
    }
 
-   public function fatal ( $msg, $caller = NULL )
+   public function fatal( $msg, $caller = NULL )
    {
-      $this->logger->fatal ( $msg, $caller );
+      $this->logger->fatal( $msg, $caller );
    }
 
-   public function error ( $msg, $caller = NULL )
+   public function error( $msg, $caller = NULL )
    {
-      $this->logger->error ( $msg, $caller );
+      $this->logger->error( $msg, $caller );
    }
 
-   public function warn ( $msg, $caller = NULL )
+   public function warn( $msg, $caller = NULL )
    {
-      $this->logger->warn ( $msg, $caller );
+      $this->logger->warn( $msg, $caller );
    }
 
-   public function info ( $msg, $caller = NULL )
+   public function info( $msg, $caller = NULL )
    {
-      $this->logger->info ( $msg, $caller );
+      $this->logger->info( $msg, $caller );
    }
 
-   public function debug ( $msg, $caller = NULL )
+   public function debug( $msg, $caller = NULL )
    {
-      $this->logger->debug ( $msg, $caller );
+      $this->logger->debug( $msg, $caller );
    }
 }

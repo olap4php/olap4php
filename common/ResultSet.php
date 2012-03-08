@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -36,18 +36,20 @@ class ResultSet
    /**
     * @var array
     */
-   private $data = array ();
+   private $data = array();
 
    public function __construct( array $headerList, array $rowList )
    {
       foreach ( $rowList as $row )
       {
          if ( !is_array( $row ) )
-            throw new OLAPException( 'ResultSet: a row of $rowList was not an array.' );
+         {
+            throw new OLAPException('ResultSet: a row of $rowList was not an array.');
+         }
 
          foreach ( $headerList as $header )
          {
-            if ( !isset( $this->data[$header] ) ) $this->data[$header] = array();
+            if ( !isset($this->data[$header]) ) $this->data[$header] = array();
 
             $this->data[$header][] = array_shift( $row );
          }
@@ -61,25 +63,25 @@ class ResultSet
 
    public function fetchRowAssoc()
    {
-      $row = array();
+      $row   = array();
       $empty = TRUE;
       foreach ( $this->data as $header => $column )
       {
-         if ( !empty( $column ) )
+         if ( !empty($column) )
          {
-            $empty = FALSE;
-            $row[ $header ] = array_shift( $this->data[ $header ] );
+            $empty        = FALSE;
+            $row[$header] = array_shift( $this->data[$header] );
          }
       }
 
       if ( $empty ) return NULL;
-      
+
       return $row;
    }
 
    public function getColumnAtIndex( $column, $index )
    {
-      if ( !isset( $this->data[$column] ) || !isset( $this->data[$column][$index] ) ) return NULL;
+      if ( !isset($this->data[$column]) || !isset($this->data[$column][$index]) ) return NULL;
 
       return $this->data[$column][$index];
    }

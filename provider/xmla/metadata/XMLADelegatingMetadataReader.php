@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -40,9 +40,9 @@ abstract class XMLADelegatingMetadataReader implements IXMLAMetadataReader
     *
     * @param IMetadataReader $metadataReader Underlying metadata reader
     */
-   public function __construct ( IXMLAMetadataReader $metadataReader )
+   public function __construct( IXMLAMetadataReader $metadataReader )
    {
-      assert ( $metadataReader != NULL );
+      assert( $metadataReader != NULL );
       $this->metadataReader = $metadataReader;
    }
 
@@ -50,12 +50,13 @@ abstract class XMLADelegatingMetadataReader implements IXMLAMetadataReader
     * Looks up a member by its unique name.
     *
     * @param string $memberUniqueName Unique name of member
+    *
     * @return XMLAMember, or null if not found
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberByUniqueName ( $memberUniqueName )
+   public function lookupMemberByUniqueName( $memberUniqueName )
    {
-      return $this->metadataReader->lookupMemberByUniqueName ( $memberUniqueName );
+      return $this->metadataReader->lookupMemberByUniqueName( $memberUniqueName );
    }
 
    /**
@@ -64,32 +65,32 @@ abstract class XMLADelegatingMetadataReader implements IXMLAMetadataReader
     *
     * @param array $memberUniqueNames List of unique names of member
     *
-    * @param array $memberMap Map to populate with members
+    * @param array $memberMap         Map to populate with members
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMembersByUniqueName ( array $memberUniqueNames, array& $memberMap )
+   public function lookupMembersByUniqueName( array $memberUniqueNames, array& $memberMap )
    {
-      $this->metadataReader->lookupMembersByUniqueName ( $memberUniqueNames, $memberMap );
+      $this->metadataReader->lookupMembersByUniqueName( $memberUniqueNames, $memberMap );
    }
 
    /**
     * Looks a member by its unique name and returns members related by
     * the specified tree-operations.
     *
-    * @param array treeOps Collection of tree operations to travel relative to
-    * given member in order to create list of members
+    * @param array  treeOps Collection of tree operations to travel relative to
+    *               given member in order to create list of members
     *
     * @param string memberUniqueName Unique name of member
     *
-    * @param array IMember List to be populated with members related to the given
-    * member, or empty set if the member is not found
+    * @param array  IMember List to be populated with members related to the given
+    *               member, or empty set if the member is not found
     *
     * @throws OLAPException if error occurs
     */
-   public function lookupMemberRelatives ( array $treeOps, $memberUniqueName, NamedList $list )
+   public function lookupMemberRelatives( array $treeOps, $memberUniqueName, NamedList $list )
    {
-      $this->metadataReader->lookupMemberRelatives ( $treeOps, $memberUniqueName, $list );
+      $this->metadataReader->lookupMemberRelatives( $treeOps, $memberUniqueName, $list );
    }
 
    /**
@@ -101,8 +102,8 @@ abstract class XMLADelegatingMetadataReader implements IXMLAMetadataReader
     *
     * @return array of members at in the level
     */
-   public function getLevelMembers ( XMLALevel $level )
+   public function getLevelMembers( XMLALevel $level )
    {
-      return $this->metadataReader->getLevelMembers ( $level );
+      return $this->metadataReader->getLevelMembers( $level );
    }
 }

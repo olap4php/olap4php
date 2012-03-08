@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -36,6 +36,7 @@ use OLAP4PHP\Provider\XMLA\XMLALevel;
 use OLAP4PHP\Provider\XMLA\Metadata\LazyMetadataList;
 use OLAP4PHP\Provider\XMLA\XMLAMetadataRequest;
 use OLAP4PHP\Provider\XMLA\XMLAConnectionContext;
+
 //use OLAP4PHP\Provider\XMLA\Metadata\XMLALevel;
 use OLAP4PHP\Provider\XMLA\Metadata\XMLALevelHandler;
 
@@ -74,36 +75,36 @@ class XMLAHierarchy extends XMLAElement implements IHierarchy
     *
     * @param
     */
-   public function __construct ( XMLADimension $dimension, $uniqueName, $name, $caption, $description, $all, $defaultMemberUniqueName )
+   public function __construct( XMLADimension $dimension, $uniqueName, $name, $caption, $description, $all, $defaultMemberUniqueName )
    {
-      if ( empty( $dimension ) || $dimension == NULL ) throw new OLAPException( 'XMLAHierarchy: $dimension cannot be NULL' );
+      if ( empty($dimension) || $dimension == NULL ) throw new OLAPException('XMLAHierarchy: $dimension cannot be NULL');
       parent::__construct( $uniqueName, $name, $caption, $description );
 
-      $this->dimension = $dimension;
-      $this->all = (boolean)$all;
+      $this->dimension               = $dimension;
+      $this->all                     = (boolean)$all;
       $this->defaultMemberUniqueName = $defaultMemberUniqueName;
 
       $this->hierarchyRestrictions = array(
-          'CATALOG_NAME' => $this->dimension->getCube()->getSchema()->getCatalog()->getName(),
-          'SCHEMA_NAME' => $this->dimension->getCube()->getSchema()->getName(),
-          'CUBE_NAME' => $this->dimension->getCube()->getName(),
-          'DIMENSION_UNIQUE_NAME' => $this->dimension->getUniqueName(),
-          'HIERARCHY_UNIQUE_NAME' => $this->getUniqueName()
+         'CATALOG_NAME'          => $this->dimension->getCube()->getSchema()->getCatalog()->getName(),
+         'SCHEMA_NAME'           => $this->dimension->getCube()->getSchema()->getName(),
+         'CUBE_NAME'             => $this->dimension->getCube()->getName(),
+         'DIMENSION_UNIQUE_NAME' => $this->dimension->getUniqueName(),
+         'HIERARCHY_UNIQUE_NAME' => $this->getUniqueName()
       );
 
       $this->levels = new LazyMetadataList(
-              new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_LEVELS ),
-              new XMLAConnectionContext(
-                      $this->dimension->getCube()->getSchema()->getCatalog()->getMetaData()->getConnection(),
-                      $this->dimension->getCube()->getSchema()->getCatalog()->getMetaData(),
-                      $this->dimension->getCube()->getSchema()->getCatalog(),
-                      $this->dimension->getCube()->getSchema(),
-                      $this->dimension->getCube(),
-                      $this->dimension,
-                      $this,
-                      NULL ),
-              new XMLALevelHandler( $this->dimension->getCube() ),
-              $this->hierarchyRestrictions);
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_LEVELS),
+         new XMLAConnectionContext(
+            $this->dimension->getCube()->getSchema()->getCatalog()->getMetaData()->getConnection(),
+            $this->dimension->getCube()->getSchema()->getCatalog()->getMetaData(),
+            $this->dimension->getCube()->getSchema()->getCatalog(),
+            $this->dimension->getCube()->getSchema(),
+            $this->dimension->getCube(),
+            $this->dimension,
+            $this,
+            NULL),
+         new XMLALevelHandler($this->dimension->getCube()),
+         $this->hierarchyRestrictions);
    }
 
    /**
@@ -139,26 +140,27 @@ class XMLAHierarchy extends XMLAElement implements IHierarchy
     */
    public function getDefaultMember()
    {
-      if ( empty( $this->defaultMemberUniqueName ) ) return NULL;
+      if ( empty($this->defaultMemberUniqueName) ) return NULL;
 
       return $this->dimension->getCube()->getMetadataReader()->lookupMemberByUniqueName( $this->defaultMemberUniqueName );
    }
 
    /**
     *
-    * @return NamedList 
+    * @return NamedList
     */
    public function getRootMembers()
    {
-      return new NamedList ( $this->dimension
-                                  ->getCube ( )
-                                  ->getMetadataReader ( )
-                                  ->getLevelMembers ( $this->levels->get ( 0 ) ) );
+      return new NamedList ($this->dimension
+         ->getCube()
+         ->getMetadataReader()
+         ->getLevelMembers( $this->levels->get( 0 ) ));
    }
 
    /**
     *
     * @param mixed $obj
+    *
     * @return boolean
     */
    public function equals( $obj )

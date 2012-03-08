@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -31,10 +31,10 @@ namespace OLAP4PHP\Metadata;
 class PropertyType implements IXMLAConstant
 {
    // Enumeration constants
-   const MEMBER   = 'MEMBER';
-   const CELL     = 'CELL';
-   const SYSTEM   = 'SYSTEM';
-   const BLOB     = 'BLOB';
+   const MEMBER = 'MEMBER';
+   const CELL   = 'CELL';
+   const SYSTEM = 'SYSTEM';
+   const BLOB   = 'BLOB';
 
    // What constant do we rep ?
    private $constant;
@@ -46,7 +46,7 @@ class PropertyType implements IXMLAConstant
    /**
     * Constructor
     */
-   public function __construct ( $constant )
+   public function __construct( $constant )
    {
       $this->constant = $constant;
 
@@ -80,11 +80,11 @@ class PropertyType implements IXMLAConstant
           * Identifies a property which contains a binary large object (blob).
           */
          case self::BLOB:
-            $this->xmlaOrdinal =  8;
+            $this->xmlaOrdinal = 8;
             break;
 
          default:
-            throw new InvalidArgumentException ( 'Unsupported property type' );
+            throw new InvalidArgumentException ('Unsupported property type');
       }
    }
 
@@ -92,31 +92,31 @@ class PropertyType implements IXMLAConstant
    /**
     * return array Return the datatype enumeration constants
     */
-   public function getEnumConstants ( )
+   public function getEnumConstants()
    {
       if ( !self::$constants )
       {
          // array of enums constants
-         self::$constants = array (
-            new PropertyType ( self::MEMBER ),
-            new PropertyType ( self::CELL ),
-            new PropertyType ( self::SYSTEM ),
-            new PropertyType ( self::BLOB )
+         self::$constants = array(
+            new PropertyType (self::MEMBER),
+            new PropertyType (self::CELL),
+            new PropertyType (self::SYSTEM),
+            new PropertyType (self::BLOB)
          );
       }
 
       return self::$constants;
    }
 
-   public function xmlaName ( )
+   public function xmlaName()
    {
-      return 'MD_PROPTYPE_'.$this->constant;
+      return 'MD_PROPTYPE_' . $this->constant;
    }
 
    /**
     * Human readable description of a Datatype instance.
     */
-   public function getDescription ( )
+   public function getDescription()
    {
       return null;
    }
@@ -124,7 +124,7 @@ class PropertyType implements IXMLAConstant
    /**
     * Unique identifier of a Datatype instance.
     */
-   public function xmlaOrdinal ( )
+   public function xmlaOrdinal()
    {
       return $this->xmlaOrdinal;
    }
@@ -132,10 +132,12 @@ class PropertyType implements IXMLAConstant
    /**
     * @return Dictionary of all values
     */
-   static public function getDictionary ( )
+   static public function getDictionary()
    {
       if ( !self::$dictionary )
-         self::$dictionary = new Dictionary ( $this );
+      {
+         self::$dictionary = new Dictionary ($this);
+      }
 
       return self::$dictionary;
    }

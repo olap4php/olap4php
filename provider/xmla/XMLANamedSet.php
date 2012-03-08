@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -45,36 +45,36 @@ class XMLANamedSet implements INamedSet, INamed
    /**
     * Constructor
     *
-    * @param ICube $cube
+    * @param ICube  $cube
     * @param string $name
     */
-   public function __construct ( ICube $cube, $name )
+   public function __construct( ICube $cube, $name )
    {
       $this->cube = $cube;
       $this->name = $name;
    }
 
-   public function getCube ( )
+   public function getCube()
    {
       return $this->cube;
    }
 
-   public function getName ( )
+   public function getName()
    {
       return $this->name;
    }
 
-   public function getCaption ( )
+   public function getCaption()
    {
       return $this->name;
    }
 
-   public function getDescription ( )
+   public function getDescription()
    {
       return '';
    }
 
-   public function getUniqueName ( )
+   public function getUniqueName()
    {
       return $this->name;
    }

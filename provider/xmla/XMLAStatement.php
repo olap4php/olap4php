@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -33,8 +33,7 @@ use OLAP4PHP\OLAP\IOLAPConnection;
 use OLAP4PHP\OLAP\OLAPException;
 
 use OLAP4PHP\Common\Logger;
-use SeeWind\Utils\DateTime;
-
+use OLAP4PHP\Provider\XMLA\XMLAUtil;
 
 /**
  * @brief XMLAStatement
@@ -42,14 +41,14 @@ use SeeWind\Utils\DateTime;
 class XMLAStatement implements IOLAPStatement
 {
    private $logger;
-   
+
    /**
     * Flag to indicate if we have performance logging enabled
-    *  
+    *
     * @var boolean
     */
    private $logPerformance;
-   
+
    ///! XMLA Connection Object
    private $con;
 
@@ -57,36 +56,37 @@ class XMLAStatement implements IOLAPStatement
    private $cellSet;
 
    ///! MDX Query Statement
-   private $statement; 
+   private $statement;
 
    public function __construct( IOLAPConnection $xmlaConnection )
    {
-      if ( empty( $xmlaConnection ) || !( $xmlaConnection instanceof XMLAConnection ) ) throw new OLAPException ( "XMLAConnection cannot be NULL" );
-      $this->con = $xmlaConnection;
-      $this->logger = $xmlaConnection->getLogger();
+      if ( empty($xmlaConnection) || !($xmlaConnection instanceof XMLAConnection) ) throw new OLAPException ("XMLAConnection cannot be NULL");
+      $this->con            = $xmlaConnection;
+      $this->logger         = $xmlaConnection->getLogger();
       $this->logPerformance = $xmlaConnection->getLogPerformance();
    }
 
-  /**
-   * @brief Executes an MDX Query via SOAP XMLA
-   *
-   * @param string $mdx - The MDX Query String to execute
-   * @return XMLACellSet An XMLA Cell Set, which implements ICellSet
-   */
-   public function executeOlapQuery ( $mdx )
-   {        
+   /**
+    * @brief Executes an MDX Query via SOAP XMLA
+    *
+    * @param string $mdx - The MDX Query String to execute
+    *
+    * @return XMLACellSet An XMLA Cell Set, which implements ICellSet
+    */
+   public function executeOlapQuery( $mdx )
+   {
       $logPerformance = $this->logPerformance;
-      
-      if( $this->logger )
+
+      if ( $this->logger )
       {
-         if( $logPerformance ) $startTime = DateTime::microtimeFloat();
-         
+         if ( $logPerformance ) $startTime = XMLAUtil::microtimeFloat();
+
          $this->logger->debug( __CLASS__, '[MDX QUERY]' . PHP_EOL . $mdx );
       }
-      
+
       $this->statement = $mdx;
 
-      $catalog = $this->con->getCatalog();
+      $catalog        = $this->con->getCatalog();
       $dataSourceInfo = $this->con->getDataSourceInfo();
 
       $queryXML = "
@@ -110,28 +110,36 @@ class XMLAStatement implements IOLAPStatement
       ";
 
       // submit the MDX query
-      if( $logPerformance ) 
-         $submitStartTime = DateTime::microtimeFloat();
+      if ( $logPerformance )
+      {
+         $submitStartTime = XMLAUtil::microtimeFloat();
+      }
       $dom = $this->con->submit( $queryXML );
-      if( $logPerformance ) 
-         $submitEndTime = DateTime::microtimeFloat() - $submitStartTime;
+      if ( $logPerformance )
+      {
+         $submitEndTime = XMLAUtil::microtimeFloat() - $submitStartTime;
+      }
 
       // populate the MDX query results into a cellset
-      if( $logPerformance ) 
-         $populateStartTime = DateTime::microtimeFloat();
-      if ( empty( $this->cellSet ) ) $this->cellSet = new XMLACellSet ( $this );
-      $this->cellSet->populate ( $dom );
-      if( $logPerformance ) 
-         $populateEndTime = DateTime::microtimeFloat() - $populateStartTime;
-      
+      if ( $logPerformance )
+      {
+         $populateStartTime = XMLAUtil::microtimeFloat();
+      }
+      if ( empty($this->cellSet) ) $this->cellSet = new XMLACellSet ($this);
+      $this->cellSet->populate( $dom );
+      if ( $logPerformance )
+      {
+         $populateEndTime = XMLAUtil::microtimeFloat() - $populateStartTime;
+      }
+
       // log timing of method calls for performance tuning
-      if( $logPerformance && $this->logger )
+      if ( $logPerformance && $this->logger )
       {
          $this->logger->debug( __CLASS__, "[MDX SUBMIT TIME] " . $submitEndTime );
          $this->logger->debug( __CLASS__, "[MDX POPULATE TIME] " . $populateEndTime );
-         $this->logger->debug( __CLASS__, "[MDX TOTAL TIME] " . ( DateTime::microtimeFloat()  - $startTime ) );
+         $this->logger->debug( __CLASS__, "[MDX TOTAL TIME] " . (DateTime::microtimeFloat() - $startTime) );
       }
-      
+
       return $this->cellSet;
    }
 
@@ -150,7 +158,7 @@ class XMLAStatement implements IOLAPStatement
     *
     * @param Logger $logger A logger
     */
-   public function setLogger ( Logger $logger )
+   public function setLogger( Logger $logger )
    {
       $this->logger = $logger;
    }
@@ -159,10 +167,10 @@ class XMLAStatement implements IOLAPStatement
    /**
     * @return Logger
     */
-   public function getLogger ( )
+   public function getLogger()
    {
       return $this->logger;
-   }   
+   }
 
-   
+
 }

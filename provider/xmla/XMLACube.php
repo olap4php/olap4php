@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -57,67 +57,68 @@ class XMLACube implements ICube, INamed
    private $hierarchies;
 
    public $hierarchiesByUname = array();
-   public $levelsByUname = array ();
+   public $levelsByUname = array();
    public $dimensionsByUname = array();
 
    /**
     * Constructor
     *
     * @param XMLASchema Schema
-    * @param string name Name
-    * @param string description Description
+    * @param string     name Name
+    * @param string     description Description
+    *
     * @throws OLAPException
     */
-   public function __construct ( XMLASchema $schema, $name, $description )
+   public function __construct( XMLASchema $schema, $name, $description )
    {
-      assert ( $schema != null );
-      assert ( $name != null );
-      assert ( $description != null );
+      assert( $schema != null );
+      assert( $name != null );
+      assert( $description != null );
 
-      $this->schema = $schema;
-      $this->name = $name;
-      $this->description = $description;
+      $this->schema         = $schema;
+      $this->name           = $name;
+      $this->description    = $description;
       $this->metadataReader =
          new XMLACachingMetadataReader (
-                new XMLAMetadataReader ( $this ),
-                $this->measuresMap );
-      
-      $connection = $schema->getCatalog ( )->getMetaData( )->getConnection ( );
-      $context = XMLAConnectionContext::createAtGranule ( $this, null, null, null );
+            new XMLAMetadataReader ($this),
+            $this->measuresMap);
 
-      $restrictions = array (
-         'CATALOG_NAME' => $schema->getCatalog ( )->getName( ),
-         'SCHEMA_NAME'  => $schema->getName ( ),
-         'CUBE_NAME'    => $this->getName ( )
+      $connection = $schema->getCatalog()->getMetaData()->getConnection();
+      $context    = XMLAConnectionContext::createAtGranule( $this, null, null, null );
+
+      $restrictions = array(
+         'CATALOG_NAME' => $schema->getCatalog()->getName(),
+         'SCHEMA_NAME'  => $schema->getName(),
+         'CUBE_NAME'    => $this->getName()
       );
 
       $this->dimensions = new LazyMetadataList (
-         new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_DIMENSIONS ),
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_DIMENSIONS),
          $context,
-         new XMLADimensionHandler ( $this ),
-         $restrictions );
+         new XMLADimensionHandler ($this),
+         $restrictions);
 
       // populate measures up front; a measure is needed in every query
       $this->measures = new NamedList();
-      $connection->populateList (
+      $connection->populateList(
          $this->measures,
          $context,
-         new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_MEASURES ),
-         new XMLAMeasureHandler ( $this->getDimensions ( )->get ( 'Measures' ) ),
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_MEASURES),
+         new XMLAMeasureHandler ($this->getDimensions()->get( 'Measures' )),
          $restrictions );
 
       for ( $i = 0; $i < $this->measures->size(); $i++ )
       {
-         $measure = $this->measures->get( $i );
+         $measure                                      = $this->measures->get( $i );
          $this->measuresMap[$measure->getUniqueName()] = $measure;
       }
 
-     // populate named sets
-     $this->namedSets = new LazyMetadataList (
-         new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_SETS ),
+      // populate named sets
+      $this->namedSets = new LazyMetadataList (
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_SETS),
          $context,
-         new XMLANamedSetHandler ( ),
-         $restrictions );
+         new XMLANamedSetHandler (),
+         $restrictions);
    }
 
    /**
@@ -162,12 +163,12 @@ class XMLACube implements ICube, INamed
     */
    public function getHierarchies()
    {
-      if ( empty ( $this->hierarchies ) )
+      if ( empty ($this->hierarchies) )
       {
          $this->hierarchies = new NamedList();
          foreach ( $this->dimensions as $dimension )
          {
-            $this->hierarchies->addAll( $dimension->getHierarchies ( ) );
+            $this->hierarchies->addAll( $dimension->getHierarchies() );
          }
       }
 
@@ -196,7 +197,7 @@ class XMLACube implements ICube, INamed
       //
       // in olap4j, see QueryDimension and QueryAxis
       //
-      throw new OLAPException( 'XMLACube::lookupMember not implemented' );
+      throw new OLAPException('XMLACube::lookupMember not implemented');
    }
 
    public function lookupMembers( array $treeOps, array $nameParts )
@@ -206,13 +207,13 @@ class XMLACube implements ICube, INamed
       //
       // in olap4j, see QueryDimension and QueryAxis
       //
-      throw new OLAPException( 'XMLACube::lookupMember not implemented' );
+      throw new OLAPException('XMLACube::lookupMember not implemented');
    }
 
    /**
     * @return IXMLAMetaDataReader
     */
-   public function getMetadataReader ( )
+   public function getMetadataReader()
    {
       return $this->metadataReader;
    }

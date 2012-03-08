@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -40,7 +40,7 @@ class XMLAMemberHandler extends XMLAMetadataHandler
    /**
     * @var array
     */
-   static private $excludedPropertyNames = array (
+   static private $excludedPropertyNames = array(
       'CATALOG_NAME',
       'CUBE_NAME',
       'DIMENSION_UNIQUE_NAME',
@@ -62,17 +62,17 @@ class XMLAMemberHandler extends XMLAMetadataHandler
 
    public function handle( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
    {
-      $memberOrdinal = XMLAUtil::integerElement( $row, 'LEVEL_NUMBER' );
-      $memberUniqueName = XMLAUtil::stringElement( $row, 'MEMBER_UNIQUE_NAME' );
-      $memberName = XMLAUtil::stringElement( $row, 'MEMBER_NAME' );
-      $parentUniqueName = XMLAUtil::stringElement( $row, 'PARENT_UNIQUE_NAME' );
-      $memberTypeValues = MemberType::values();
-      $memberType = $memberTypeValues [ XMLAUtil::integerElement( $row, 'MEMBER_TYPE' ) ];
-      $memberCaption = XMLAUtil::stringElement( $row, 'MEMBER_CAPTION' );
+      $memberOrdinal       = XMLAUtil::integerElement( $row, 'LEVEL_NUMBER' );
+      $memberUniqueName    = XMLAUtil::stringElement( $row, 'MEMBER_UNIQUE_NAME' );
+      $memberName          = XMLAUtil::stringElement( $row, 'MEMBER_NAME' );
+      $parentUniqueName    = XMLAUtil::stringElement( $row, 'PARENT_UNIQUE_NAME' );
+      $memberTypeValues    = MemberType::values();
+      $memberType          = $memberTypeValues [XMLAUtil::integerElement( $row, 'MEMBER_TYPE' )];
+      $memberCaption       = XMLAUtil::stringElement( $row, 'MEMBER_CAPTION' );
       $childrenCardinality = XMLAUtil::integerElement( $row, 'CHILDREN_CARDINALITY' );
 
       $level = $context->getLevel( $row );
-      
+
       $map = array();
       $this->addUserDefinedDimensionProperties( $row, $level, $map );
 

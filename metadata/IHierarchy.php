@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -33,30 +33,30 @@ interface IHierarchy extends IMetadataElement
    /**
     * @return Member
     */
-   public function getDefaultMember ( );
+   public function getDefaultMember();
 
 
    /**
     * @return Dimension
     */
-   public function getDimension ( );
+   public function getDimension();
 
 
    /**
     * @return array Level
     */
-   public function getLevels ( );
+   public function getLevels();
 
 
    /**
     * @return array Member
     */
-   public function getRootMembers ( );
+   public function getRootMembers();
 
 
    /**
     * @return boolean
     */
-   public function hasAll ( );
+   public function hasAll();
 
 }

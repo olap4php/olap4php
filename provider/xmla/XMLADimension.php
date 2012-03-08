@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -61,16 +61,16 @@ class XMLADimension extends XMLAElement implements IDimension
    /**
     * Constructor
     *
-    * @param XMLACube $cube
-    * @param $uniqueName
-    * @param $name
-    * @param $caption
-    * @param $description
+    * @param XMLACube      $cube
+    * @param               $uniqueName
+    * @param               $name
+    * @param               $caption
+    * @param               $description
     * @param DimensionType $type
-    * @param $defaultHierarchyUniqueName
-    * @param $ordinal
+    * @param               $defaultHierarchyUniqueName
+    * @param               $ordinal
     */
-   public function __construct (
+   public function __construct(
       XMLACube $cube,
       $uniqueName,
       $name,
@@ -80,46 +80,46 @@ class XMLADimension extends XMLAElement implements IDimension
       $defaultHierarchyUniqueName,
       $ordinal )
    {
-      if ( empty( $cube ) || $cube == NULL ) throw new OLAPException( 'XMLADimension: $cube cannot be NULL' );
+      if ( empty($cube) || $cube == NULL ) throw new OLAPException('XMLADimension: $cube cannot be NULL');
       parent::__construct( $uniqueName, $name, $caption, $description );
       $this->defaultHierarchyUniqueName = $defaultHierarchyUniqueName;
-      $this->cube = $cube;
-      $this->type = $type;
-      $this->ordinal = (int)$ordinal;
+      $this->cube                       = $cube;
+      $this->type                       = $type;
+      $this->ordinal                    = (int)$ordinal;
 
       $this->dimensionRestrictions = array(
-          'CATALOG_NAME' => $this->cube->getSchema()->getCatalog()->getName(),
-          'SCHEMA_NAME' => $this->cube->getSchema()->getName(),
-          'CUBE_NAME' => $this->cube->getName(),
-          'DIMENSION_UNIQUE_NAME' => $this->getUniqueName()
+         'CATALOG_NAME'          => $this->cube->getSchema()->getCatalog()->getName(),
+         'SCHEMA_NAME'           => $this->cube->getSchema()->getName(),
+         'CUBE_NAME'             => $this->cube->getName(),
+         'DIMENSION_UNIQUE_NAME' => $this->getUniqueName()
       );
 
       $this->hierarchies = new LazyMetadataList(
-              new XMLAMetadataRequest( XMLAMetadataRequest::MDSCHEMA_HIERARCHIES ),
-              new XMLAConnectionContext(
-                      $this->cube->getSchema()->getCatalog()->getMetadata()->getConnection(),
-                      $this->cube->getSchema()->getCatalog()->getMetadata(),
-                      $this->cube->getSchema()->getCatalog(),
-                      $this->cube->getSchema(),
-                      $this->cube,
-                      $this,
-                      NULL, NULL ),
-              new XMLAHierarchyHandler( $this->cube ),
-              $this->dimensionRestrictions);
+         new XMLAMetadataRequest(XMLAMetadataRequest::MDSCHEMA_HIERARCHIES),
+         new XMLAConnectionContext(
+            $this->cube->getSchema()->getCatalog()->getMetadata()->getConnection(),
+            $this->cube->getSchema()->getCatalog()->getMetadata(),
+            $this->cube->getSchema()->getCatalog(),
+            $this->cube->getSchema(),
+            $this->cube,
+            $this,
+            NULL, NULL),
+         new XMLAHierarchyHandler($this->cube),
+         $this->dimensionRestrictions);
    }
 
    /**
     *
     * @return DimensionType
     */
-   public function getDimensionType ( )
+   public function getDimensionType()
    {
       return $this->type;
    }
 
    /**
     * @brief Gets the XMLACube this XMLADimension uses
-    * 
+    *
     * @return XMLACube
     */
    public function getCube()
@@ -133,7 +133,7 @@ class XMLADimension extends XMLAElement implements IDimension
     */
    public function getDefaultHierarchy()
    {
-      for( $i = 0; $i < $this->hierarchies->size(); $i++ )
+      for ( $i = 0; $i < $this->hierarchies->size(); $i++ )
       {
          $hierarchy = $this->hierarchies->get( $i );
          if ( $hierarchy->getUniqueName() == $this->defaultHierarchyUniqueName ) return $hierarchy;
@@ -146,6 +146,7 @@ class XMLADimension extends XMLAElement implements IDimension
    /**
     *
     * @param mixed $obj
+    *
     * @return boolean
     */
    public function equals( $obj )
@@ -177,7 +178,7 @@ class XMLADimension extends XMLAElement implements IDimension
    }
 
 
-   public function isVisible ( )
+   public function isVisible()
    {
    }
 }

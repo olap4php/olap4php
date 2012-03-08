@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -30,28 +30,28 @@ use OLAP4PHP\Provider\XMLA\XMLAMetadataColumn;
 
 class XMLAMetadataRequest
 {
-   const DISCOVER_DATASOURCES       = 'DISCOVER_DATASOURCES';
-   const DISCOVER_SCHEMA_ROWSETS    = 'DISCOVER_SCHEMA_ROWSETS';
-   const DISCOVER_ENUMERATORS       = 'DISCOVER_ENUMERATORS';
-   const DISCOVER_PROPERTIES        = 'DISCOVER_PROPERTIES';
-   const DISCOVER_KEYWORDS          = 'DISCOVER_KEYWORDS';
-   const DISCOVER_LITERALS          = 'DISCOVER_LITERALS';
-   const DBSCHEMA_CATALOGS          = 'DBSCHEMA_CATALOGS';
-   const DBSCHEMA_COLUMNS           = 'DBSCHEMA_COLUMNS';
-   const DBSCHEMA_PROVIDER_TYPES    = 'DBSCHEMA_PROVIDER_TYPES';
-   const DBSCHEMA_TABLES            = 'DBSCHEMA_TABLES';
-   const DBSCHEMA_TABLES_INFO       = 'DBSCHEMA_TABLES_INFO';
-   const DBSCHEMA_SCHEMATA          = 'DBSCHEMA_SCHEMATA';
-   const MDSCHEMA_ACTIONS           = 'MDSCHEMA_ACTIONS';
-   const MDSCHEMA_CUBES             = 'MDSCHEMA_CUBES';
-   const MDSCHEMA_DIMENSIONS        = 'MDSCHEMA_DIMENSIONS';
-   const MDSCHEMA_FUNCTIONS         = 'MDSCHEMA_FUNCTIONS';
-   const MDSCHEMA_HIERARCHIES       = 'MDSCHEMA_HIERARCHIES';
-   const MDSCHEMA_LEVELS            = 'MDSCHEMA_LEVELS';
-   const MDSCHEMA_MEASURES          = 'MDSCHEMA_MEASURES';
-   const MDSCHEMA_MEMBERS           = 'MDSCHEMA_MEMBERS';
-   const MDSCHEMA_PROPERTIES        = 'MDSCHEMA_PROPERTIES';
-   const MDSCHEMA_SETS              = 'MDSCHEMA_SETS';
+   const DISCOVER_DATASOURCES    = 'DISCOVER_DATASOURCES';
+   const DISCOVER_SCHEMA_ROWSETS = 'DISCOVER_SCHEMA_ROWSETS';
+   const DISCOVER_ENUMERATORS    = 'DISCOVER_ENUMERATORS';
+   const DISCOVER_PROPERTIES     = 'DISCOVER_PROPERTIES';
+   const DISCOVER_KEYWORDS       = 'DISCOVER_KEYWORDS';
+   const DISCOVER_LITERALS       = 'DISCOVER_LITERALS';
+   const DBSCHEMA_CATALOGS       = 'DBSCHEMA_CATALOGS';
+   const DBSCHEMA_COLUMNS        = 'DBSCHEMA_COLUMNS';
+   const DBSCHEMA_PROVIDER_TYPES = 'DBSCHEMA_PROVIDER_TYPES';
+   const DBSCHEMA_TABLES         = 'DBSCHEMA_TABLES';
+   const DBSCHEMA_TABLES_INFO    = 'DBSCHEMA_TABLES_INFO';
+   const DBSCHEMA_SCHEMATA       = 'DBSCHEMA_SCHEMATA';
+   const MDSCHEMA_ACTIONS        = 'MDSCHEMA_ACTIONS';
+   const MDSCHEMA_CUBES          = 'MDSCHEMA_CUBES';
+   const MDSCHEMA_DIMENSIONS     = 'MDSCHEMA_DIMENSIONS';
+   const MDSCHEMA_FUNCTIONS      = 'MDSCHEMA_FUNCTIONS';
+   const MDSCHEMA_HIERARCHIES    = 'MDSCHEMA_HIERARCHIES';
+   const MDSCHEMA_LEVELS         = 'MDSCHEMA_LEVELS';
+   const MDSCHEMA_MEASURES       = 'MDSCHEMA_MEASURES';
+   const MDSCHEMA_MEMBERS        = 'MDSCHEMA_MEMBERS';
+   const MDSCHEMA_PROPERTIES     = 'MDSCHEMA_PROPERTIES';
+   const MDSCHEMA_SETS           = 'MDSCHEMA_SETS';
 
    /**
     * @var array of XMLAMetadataColumn
@@ -67,7 +67,7 @@ class XMLAMetadataRequest
     * @var string
     */
    private $requestName;
-   
+
    /**
     * Indicates if a request can be cached or not
     * @var boolean
@@ -83,20 +83,20 @@ class XMLAMetadataRequest
     *
     * @param string $requestType
     */
-   public function __construct ( $requestType )
+   public function __construct( $requestType )
    {
       switch ( $requestType )
       {
          case self::DBSCHEMA_CATALOGS:
-            
-            $this->columns = array( new XMLAMetadataColumn( "CATALOG_NAME", "TABLE_CAT" ) );
+
+            $this->columns = array( new XMLAMetadataColumn("CATALOG_NAME", "TABLE_CAT") );
             break;
 
-         case 
-            $this->columns = array (
-               new XMLAMetadataColumn( "SCHEMA_NAME", "TABLE_SCHEM" ),
-               new XMLAMetadataColumn( "CATALOG_NAME", "TABLE_CAT" )
-            );
+         case
+         $this->columns = array(
+            new XMLAMetadataColumn("SCHEMA_NAME", "TABLE_SCHEM"),
+            new XMLAMetadataColumn("CATALOG_NAME", "TABLE_CAT")
+         );
             break;
 
          case self::DISCOVER_DATASOURCES:
@@ -144,7 +144,7 @@ class XMLAMetadataRequest
 
          case self::DISCOVER_KEYWORDS:
             $this->columns = array(
-                new XMLAMetadataColumn("Keyword")
+               new XMLAMetadataColumn("Keyword")
             );
             break;
 
@@ -159,7 +159,7 @@ class XMLAMetadataRequest
             break;
 
          case self::DBSCHEMA_CATALOGS:
-            $this->columns = array(
+            $this->columns    = array(
                new XMLAMetadataColumn("CATALOG_NAME"),
                new XMLAMetadataColumn("DESCRIPTION"),
                new XMLAMetadataColumn("ROLES"),
@@ -428,7 +428,7 @@ class XMLAMetadataRequest
             break;
 
          default:
-            throw new OLAPException( 'Unsupported metadata request type ' . $requestType );
+            throw new OLAPException('Unsupported metadata request type ' . $requestType);
       }
 
       $this->requestName = $requestType;
@@ -473,14 +473,15 @@ class XMLAMetadataRequest
 
    /**
     * @brief Retrieves a column by name, or NULL if not found
-    * 
+    *
     * @param string $name - Column Name
+    *
     * @return XMLAMetadataColumn
     */
    public function getColumn( $name )
    {
-      if ( !$this->columnsByName ) $this->lazyIndexColumnsByName ( );
-      return isset( $this->columnsByName[$name] ) ? $this->columnsByName[$name] : NULL;
+      if ( !$this->columnsByName ) $this->lazyIndexColumnsByName();
+      return isset($this->columnsByName[$name]) ? $this->columnsByName[$name] : NULL;
    }
 
    public function getName()
@@ -495,17 +496,17 @@ class XMLAMetadataRequest
 
    public function getColumnNames()
    {
-      if ( !$this->columnsByName ) $this->lazyIndexColumnsByName ( );
+      if ( !$this->columnsByName ) $this->lazyIndexColumnsByName();
       return array_keys( $this->columnsByName );
    }
-   
-   private function lazyIndexColumnsByName ( )
+
+   private function lazyIndexColumnsByName()
    {
-      $this->columnsByName = array ( );
+      $this->columnsByName = array();
       foreach ( $this->columns as $column )
       {
-         $this->columnsByName [ $column->name ] = $column;
+         $this->columnsByName [$column->name] = $column;
       }
    }
-   
+
 }

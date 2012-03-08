@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -47,31 +47,31 @@ class XMLACellSetAxis extends ArrayObject implements ICellSetAxis
 
    /**
     * @param ICellSet $cellSet
-    * @param IAxis $axis
-    * @param array IPosition $positions
+    * @param IAxis    $axis
+    * @param          array IPosition $positions
     */
-   public function __construct ( XMLACellSet $cellSet, Axis $axis, array $positions )
+   public function __construct( XMLACellSet $cellSet, Axis $axis, array $positions )
    {
-      $this->cellSet       = $cellSet;
-      $this->axis          = $axis;
-      $this->positions     = new ArrayObject( $positions );
+      $this->cellSet   = $cellSet;
+      $this->axis      = $axis;
+      $this->positions = new ArrayObject($positions);
    }
 
 
    /**
     * @return XMLACellSetAxisMetaData
     */
-   public function getAxisMetaData ( )
+   public function getAxisMetaData()
    {
-      $cellSetMetaData = $this->cellSet->getMetaData ( );
-      if ( $this->axis->isFilter ( ) )
+      $cellSetMetaData = $this->cellSet->getMetaData();
+      if ( $this->axis->isFilter() )
       {
-         return $cellSetMetaData->getFilterAxisMetaData ( );
+         return $cellSetMetaData->getFilterAxisMetaData();
       }
       else
       {
-         $axesMetaData = $cellSetMetaData->getAxesMetaData ( );
-         return $axesMetaData [ $this->axis->axisOrdinal ( ) ];
+         $axesMetaData = $cellSetMetaData->getAxesMetaData();
+         return $axesMetaData [$this->axis->axisOrdinal()];
       }
    }
 
@@ -79,16 +79,16 @@ class XMLACellSetAxis extends ArrayObject implements ICellSetAxis
    /**
     * @return IAxis
     */
-   public function getAxisOrdinal ( )
+   public function getAxisOrdinal()
    {
-      return $this->axis->axisOrdinal ( );
+      return $this->axis->axisOrdinal();
    }
 
 
    /**
     * @return XMLACellSet
     */
-   public function getCellSet ( )
+   public function getCellSet()
    {
       return $this->cellSet;
    }
@@ -97,7 +97,7 @@ class XMLACellSetAxis extends ArrayObject implements ICellSetAxis
    /**
     * @return int
     */
-   public function getPositionCount ( )
+   public function getPositionCount()
    {
       return $this->getPositions()->count();
    }
@@ -106,7 +106,7 @@ class XMLACellSetAxis extends ArrayObject implements ICellSetAxis
    /**
     * @return array XMLAPosition
     */
-   public function getPositions ( )
+   public function getPositions()
    {
       return $this->positions;
    }

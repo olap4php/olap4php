@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -33,50 +33,50 @@ interface ICell
    /**
     * @return ICellSet
     */
-   public function getCellSet ( );
+   public function getCellSet();
 
    /**
     * @return array integer
     */
-   public function getCoordinateList ( );
+   public function getCoordinateList();
 
    /**
     * @return string
     */
-   public function getErrorText ( );
+   public function getErrorText();
 
    /**
     * @return string
     */
-   public function getFormattedValue ( );
+   public function getFormattedValue();
 
    /**
     * @return int
     */
-   public function getOrdinal ( );
+   public function getOrdinal();
 
    /**
     * @return object
     */
-   public function getPropertyValue ( $property );
+   public function getPropertyValue( $property );
 
    /**
     * @return object
     */
-   public function getValue ( );
+   public function getValue();
 
    /**
     * @return boolean
     */
-   public function isEmpty ( );
+   public function isEmpty();
 
    /**
     * @return boolean
     */
-   public function isError ( );
+   public function isError();
 
    /**
     * @return boolean
     */
-   public function isNull ( );
+   public function isNull();
 }

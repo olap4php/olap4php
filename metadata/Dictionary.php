@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -32,91 +32,93 @@ namespace OLAP4PHP\Metadata;
 class Dictionary implements IXMLAConstantDictionary
 {
    private $class;
-   private $mapByName = array ( );
-   private $mapByOrdinal = array ( );
+   private $mapByName = array();
+   private $mapByOrdinal = array();
    private $constants;
 
    // Static dictionary map by class
-   private static $mapByClass = array ( );
+   private static $mapByClass = array();
 
-   public function __construct ( $class )
+   public function __construct( $class )
    {
       $this->class = $class;
-      $this->init ( );
+      $this->init();
    }
 
-   private function init ( )
+   private function init()
    {
       if ( $this->constants != null )
+      {
          return;
+      }
 
-      $classname = $this->class;
-      $this->constants = $classname::getEnumConstants ( );
+      $classname       = $this->class;
+      $this->constants = $classname::getEnumConstants();
       foreach ( $this->constants as $constant )
       {
-         $this->mapByName [ $constant->xmlaName ( ) ] = $constant;
-         $this->mapByOrdinal [ $constant->xmlaOrdinal ( ) ] = $constant;
+         $this->mapByName [$constant->xmlaName()]       = $constant;
+         $this->mapByOrdinal [$constant->xmlaOrdinal()] = $constant;
       }
    }
 
-   public static function forClass ( $class )
+   public static function forClass( $class )
    {
-      assert ( $class != null );
-      $dictionary = !isset ( self::$mapByClass [ $class ] ) ? null : self::$mapByClass [ $class ];
+      assert( $class != null );
+      $dictionary = !isset (self::$mapByClass [$class]) ? null : self::$mapByClass [$class];
       if ( $dictionary == null )
       {
-         $dictionary = new Dictionary ( $class );
-         self::$mapByClass [ $class ] = $dictionary;
+         $dictionary                = new Dictionary ($class);
+         self::$mapByClass [$class] = $dictionary;
       }
 
       return $dictionary;
    }
 
-    public function forOrdinal ( $xmlaOrdinal )
-    {
-       //init();
-       return isset ( $this->mapByOrdinal [ $xmlaOrdinal ] ) ? $this->mapByOrdinal [ $xmlaOrdinal ] : null;
-    }
+   public function forOrdinal( $xmlaOrdinal )
+   {
+      //init();
+      return isset ($this->mapByOrdinal [$xmlaOrdinal]) ? $this->mapByOrdinal [$xmlaOrdinal] : null;
+   }
 
-    public function forName ( $xmlaName )
-    {
-       //$this->init();
-       return isset ( $this->mapByName [ $xmlaName ] ) ? $this->mapByName [ $xmlaName ] : null;
-    }
+   public function forName( $xmlaName )
+   {
+      //$this->init();
+      return isset ($this->mapByName [$xmlaName]) ? $this->mapByName [$xmlaName] : null;
+   }
 
-    public function forMask ( $xmlaOrdinalMask )
-    {
-        //$this->init();
-        $set = array ( );
-        foreach ( $this->constants as $constant )
-        {
-           if ( ($xmlaOrdinalMask & $constant->xmlaOrdinal ( ) ) != 0 )
-           {
-              $set [] = $constant;
-           }
-        }
-        return $set;
-    }
+   public function forMask( $xmlaOrdinalMask )
+   {
+      //$this->init();
+      $set = array();
+      foreach ( $this->constants as $constant )
+      {
+         if ( ($xmlaOrdinalMask & $constant->xmlaOrdinal()) != 0 )
+         {
+            $set [] = $constant;
+         }
+      }
+      return $set;
+   }
 
-    public function toMask ( array $set )
-    {
-        $mask = 0;
-        foreach ( $set as $enum )
-        {
-            $mask |= $enum->xmlaOrdinal();
-        }
+   public function toMask( array $set )
+   {
+      $mask = 0;
+      foreach ( $set as $enum )
+      {
+         $mask |= $enum->xmlaOrdinal();
+      }
 
-        return $mask;
-    }
+      return $mask;
+   }
 
-    public function getValues ( )
-    {
-       //$this->init();
-       return $this->constants;
-    }
+   public function getValues()
+   {
+      //$this->init();
+      return $this->constants;
+   }
 
-    public function getEnumClass ( )
-    {
-       return $this->class;
-    }
+   public function getEnumClass()
+   {
+      return $this->class;
+   }
 }

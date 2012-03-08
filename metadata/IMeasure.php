@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -35,21 +35,21 @@ interface IMeasure extends IMember
     *
     * @return Aggregator
     */
-   public function getAggregator ( );
+   public function getAggregator();
 
    /**
-   * Returns the data type of this Measure.
-   *
-   * @return data type
-   */
-   public function getDatatype ( );
+    * Returns the data type of this Measure.
+    *
+    * @return data type
+    */
+   public function getDatatype();
 
    /**
-   * Returns whether this Measure is visible.
-   *
-   * @return whether this Measure is visible
-   */
-   public function isVisible ( );
+    * Returns whether this Measure is visible.
+    *
+    * @return whether this Measure is visible
+    */
+   public function isVisible();
 
 }
 

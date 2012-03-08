@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -34,37 +34,37 @@ interface IOLAPConnection
    /*
     * @return array ICatalog
     */
-   public function getCatalogs ( );
+   public function getCatalogs();
 
 
    /*
     * @return string
     */
-   public function getCatalog ( );
+   public function getCatalog();
 
-   public function getDataSourceInfo ( );
+   public function getDataSourceInfo();
 
-   public function getURI ( );
+   public function getURI();
 
 
    /*
     * @return array IOlapDatabaseMetaData
     */
-   public function getMetaData ( );
+   public function getMetaData();
 
 
    /*
     * @return ISchema
     */
-   public function getSchema ( );
+   public function getSchema();
 
 
    /*
     * @param string $catalog
     */
-   public function setCatalog ( $catalog );
+   public function setCatalog( $catalog );
 
-   public function setDataSourceInfo ( $dataSourceInfo );
+   public function setDataSourceInfo( $dataSourceInfo );
 
    public function setURI( $uri );
 }
