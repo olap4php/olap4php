@@ -19,3 +19,13 @@ Change Log
 
 0.9.0: Friday, January 13th, 2012; Patrick Leckey <pat@olap4php.org>
 - Initial public release
+
+0.9.1: Thursday, March 8th, 2012; Patrick Leckey <pat@olap4php.org>
+- Fixed an incompatibility with Microsoft SSAS XML/A Cube Names
+- Fixed inconsistent return types from XMLACell::isNull() and ::getPropertyValue()
+- Fixed XMLAUtil::parseUniqueName to be more compliant with different back-ends
+- Fixed incorrect metadata namespace in XMLACellSet
+- Fixed XMLAMemberUndefined::getCube()
+- Corrected versions in Properties class
+- Added patch folder for IDEA-style upgrade patches
+- Cleaned up some documentation and code style issues (ongoing)

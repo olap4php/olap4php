@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -47,18 +47,18 @@ class XMLAMemberUndefined extends XMLAElement implements IXMLAMember, INamed
    private $level;
    private $hierarchy;
    private $lnum;
-   
+
    /**
     * Constructor
     *
-    * @param XMLACellSet $cellSet
-    * @param XMLALevel $level
+    * @param XMLACellSet   $cellSet
+    * @param XMLALevel     $level
     * @param XMLAHierarchy $hierarchy
-    * @param int $lnum Level number
-    * @param string $caption Caption
-    * @param string $uname Member unique name
+    * @param int           $lnum    Level number
+    * @param string        $caption Caption
+    * @param string        $uname   Member unique name
     */
-   public function __construct (
+   public function __construct(
       XMLACellSet $cellSet,
       XMLALevel $level,
       XMLAHierarchy $hierarchy,
@@ -74,62 +74,62 @@ class XMLAMemberUndefined extends XMLAElement implements IXMLAMember, INamed
       $this->uniqueName = $uname;
    }
 
-   public function getCube ( )
+   public function getCube()
    {
-      return $cellSet->getMetaData ( )->getCube ( );
+      return $this->cellSet->getMetaData()->getCube();
    }
 
    public function getConnection()
    {
-      return $this->getCatalog ( )->getMetaData ( )->getConnection ( );
+      return $this->getCatalog()->getMetaData()->getConnection();
    }
 
-   public function getCatalog ( )
+   public function getCatalog()
    {
-      return $this->getCube ( )->getSchema ( )->getCatalog ( );
+      return $this->getCube()->getSchema()->getCatalog();
    }
 
-   public function getPropertyValueMap ( )
+   public function getPropertyValueMap()
    {
-      return array ( );
+      return array();
    }
 
-   public function getChildMembers ( )
+   public function getChildMembers()
    {
-      return Olap4jUtil.emptyNamedList ( );
+      //return Olap4jUtil::emptyNamedList ( );
    }
 
-   public function getChildMemberCount ( )
+   public function getChildMemberCount()
    {
       return 0;
    }
 
-   public function getParentMember ( )
+   public function getParentMember()
    {
       return null;
    }
 
-   public function getLevel ( )
+   public function getLevel()
    {
       return $this->level;
    }
 
-   public function getHierarchy ( )
+   public function getHierarchy()
    {
       return $this->hierarchy;
    }
 
-   public function getDimension ( )
+   public function getDimension()
    {
-      return $this->hierarchy->getDimension ( );
+      return $this->hierarchy->getDimension();
    }
 
-   public function getMemberType ( )
+   public function getMemberType()
    {
-      return new MemberType ( MemberType::UNKNOWN );
+      return new MemberType (MemberType::UNKNOWN);
    }
 
-   public function isAll ( )
+   public function isAll()
    {
       return false; // FIXME
    }
@@ -139,72 +139,72 @@ class XMLAMemberUndefined extends XMLAElement implements IXMLAMember, INamed
       return false; // FIXME
    }
 
-   public function isCalculated ( )
+   public function isCalculated()
    {
       return false; // FIXME
    }
 
-   public function getSolveOrder ( )
+   public function getSolveOrder()
    {
       return 0; // FIXME
    }
 
-   public function getExpression ( )
+   public function getExpression()
    {
       return null;
    }
 
-   public function getAncestorMembers ( )
+   public function getAncestorMembers()
    {
-      return array ( ); // FIXME
+      return array(); // FIXME
    }
 
-   public function isCalculatedInQuery ( )
+   public function isCalculatedInQuery()
    {
       return true; // probably
    }
 
-   public function getPropertyValue ( $property )
+   public function getPropertyValue( $property )
    {
       return null;
    }
 
-   public function getPropertyFormattedValue ( $property )
+   public function getPropertyFormattedValue( $property )
    {
       return null;
    }
 
-   public function setProperty ( IProperty $property, $value )
+   public function setProperty( IProperty $property, $value )
    {
-      throw new \BadMethodCallException ( );
+      throw new \BadMethodCallException ();
    }
 
-   public function getProperties ( )
+   public function getProperties()
    {
-      return new NamedList ( );
+      return new NamedList ();
    }
 
-   public function getOrdinal ( )
+   public function getOrdinal()
    {
       return -1; // FIXME
    }
 
-   public function isHidden ( )
+   public function isHidden()
    {
       return false;
    }
 
-   public function getDepth ( )
+   public function getDepth()
    {
       return $this->lnum;
    }
 
-   public function getDataMember ( )
+   public function getDataMember()
    {
       return null;
    }
 
-   public function getName ( )
+   public function getName()
    {
       return $this->caption;
    }

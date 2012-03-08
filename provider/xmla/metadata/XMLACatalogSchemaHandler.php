@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -38,14 +38,18 @@ class XMLACatalogSchemaHandler extends XMLAMetadataHandler
 
    public function __construct( $catalogName )
    {
-      if ( empty( $catalogName ) ) throw new \RuntimeException ( 'The Catalog Schema Handler requires a catalog name.' );
+      if ( empty($catalogName) ) throw new \RuntimeException ('The Catalog Schema Handler requires a catalog name.');
       $this->catalogName = $catalogName;
    }
 
-   public function handle ( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
+   public function handle( DOMElement $row, XMLAConnectionContext $context, NamedList $list )
    {
-      $schemaName = ( XMLAUtil::stringElement( $row, "SCHEMA_NAME") === NULL ) ? '' : XMLAUtil::stringElement( $row, "SCHEMA_NAME");
-      $catalogName = XMLAUtil::stringElement( $row, "CATALOG_NAME");
+      $schemaName  = (XMLAUtil::stringElement( $row, "SCHEMA_NAME" ) === NULL) ? '' : XMLAUtil::stringElement( $row, "SCHEMA_NAME" );
+      $catalogName = XMLAUtil::stringElement( $row, "CATALOG_NAME" );
+      if ( !$catalogName && XMLAUtil::stringElement( $row, "CUBE_NAME" ) )
+      {
+         $catalogName = XMLAUtil::stringElement( $row, "CUBE_NAME" );
+      }
 
       //print $catalogName . ':' . $schemaName . PHP_EOL;
 
@@ -53,7 +57,10 @@ class XMLACatalogSchemaHandler extends XMLAMetadataHandler
       if ( $this->catalogName == $catalogName && $list->get( $schemaName ) === NULL )
       {
          //echo 'XMLACatalogSchmeHandler: inside if';
-         $list->add( new XMLASchema( $context->getCatalog( $row ), $schemaName ) );
+         if ( $schemaName )
+         {
+            $list->add( new XMLASchema($context->getCatalog( $row ), $schemaName) );
+         }
       }
    }
 }

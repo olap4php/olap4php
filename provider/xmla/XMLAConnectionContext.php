@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -83,16 +83,16 @@ class XMLAConnectionContext
    /**
     * Creates a Context.
     *
-    * @param XMLAConnection Connection (must not be null)
+    * @param XMLAConnection       Connection (must not be null)
     * @param XMLADatabaseMetaData DatabaseMetaData (may be null)
-    * @param XMLACatalog Catalog (may be null if DatabaseMetaData is null)
-    * @param XMLASchema Schema (may be null if Catalog is null)
-    * @param XMLACube Cube (may be null if Schema is null)
-    * @param XMLADimension Dimension (may be null if Cube is null)
-    * @param XMLAHierarchy Hierarchy (may be null if Dimension is null)
-    * @param XMLALevel Level (may be null if Hierarchy is null)
+    * @param XMLACatalog          Catalog (may be null if DatabaseMetaData is null)
+    * @param XMLASchema           Schema (may be null if Catalog is null)
+    * @param XMLACube             Cube (may be null if Schema is null)
+    * @param XMLADimension        Dimension (may be null if Cube is null)
+    * @param XMLAHierarchy        Hierarchy (may be null if Dimension is null)
+    * @param XMLALevel            Level (may be null if Hierarchy is null)
     */
-   public function __construct (
+   public function __construct(
       XMLAConnection $connection,
       XMLADatabaseMetaData $databaseMetaData = NULL,
       XMLACatalog $catalog = NULL,
@@ -102,13 +102,13 @@ class XMLAConnectionContext
       XMLAHierarchy $hierarchy = NULL,
       XMLALevel $level = NULL )
    {
-      assert (
-            ( $databaseMetaData != null || $catalog == null )
-         && ( $catalog != null || $schema == null )
-         && ( $schema != null || $cube == null )
-         && ( $cube != null || $dimension == null )
-         && ( $dimension != null || $hierarchy == null )
-         && ( $hierarchy != null || $level == null ) );
+      assert(
+         ($databaseMetaData != null || $catalog == null)
+            && ($catalog != null || $schema == null)
+            && ($schema != null || $cube == null)
+            && ($cube != null || $dimension == null)
+            && ($dimension != null || $hierarchy == null)
+            && ($hierarchy != null || $level == null) );
 
       $this->xmlaConnection       = $connection;
       $this->xmlaDatabaseMetaData = $databaseMetaData;
@@ -118,33 +118,33 @@ class XMLAConnectionContext
       $this->xmlaDimension        = $dimension;
       $this->xmlaHierarchy        = $hierarchy;
       $this->xmlaLevel            = $level;
-      $this->logger = $connection->getLogger ( );
+      $this->logger               = $connection->getLogger();
    }
 
 
    /**
     * Shorthand way to create a Context at Cube level or finer.
     *
-    * @param XMLACube Cube (must not be null)
+    * @param XMLACube      Cube (must not be null)
     * @param XMLADimension Dimension (may be null)
     * @param XMLAHierarchy Hierarchy (may be null if Dimension is null)
-    * @param XMLALevel Level (may be null if Hierarchy is null)
+    * @param XMLALevel     Level (may be null if Hierarchy is null)
     */
-   static public function createAtGranule ( 
+   static public function createAtGranule(
       XMLACube $cube,
       XMLADimension $dimension = NULL,
       XMLAHierarchy $hierarchy = NULL,
       XMLALevel $level = NULL )
    {
       return new XMLAConnectionContext (
-         $cube->getSchema ( )->getCatalog ( )->getMetadata ()->getConnection ( ),
-         $cube->getSchema ( )->getCatalog ( )->getMetadata (),
-         $cube->getSchema ( )->getCatalog ( ),
-         $cube->getSchema ( ),
+         $cube->getSchema()->getCatalog()->getMetadata()->getConnection(),
+         $cube->getSchema()->getCatalog()->getMetadata(),
+         $cube->getSchema()->getCatalog(),
+         $cube->getSchema(),
          $cube,
          $dimension,
          $hierarchy,
-         $level );
+         $level);
    }
 
    /**
@@ -152,19 +152,19 @@ class XMLAConnectionContext
     *
     * @param XMLALevel Level (must not be null)
     */
-   static public function createAtLevel ( XMLALevel $level )
+   static public function createAtLevel( XMLALevel $level )
    {
-      return XMLAConnectionContext::createAtGranule (
-         $level->getHierarchy ( )->getDimension ( )->getCube ( ),
-         $level->getHierarchy ( )->getDimension ( ),
-         $level->getHierarchy ( ),
+      return XMLAConnectionContext::createAtGranule(
+         $level->getHierarchy()->getDimension()->getCube(),
+         $level->getHierarchy()->getDimension(),
+         $level->getHierarchy(),
          $level );
    }
 
    /**
     * @return XMLACube
     */
-   public function getCube ( DOMElement $row )
+   public function getCube( DOMElement $row )
    {
       if ( $this->xmlaCube != null ) return $this->xmlaCube;
 
@@ -174,25 +174,25 @@ class XMLAConnectionContext
    /**
     * @return XMLADimension
     */
-   public function getDimension ( DOMElement $row )
+   public function getDimension( DOMElement $row )
    {
       if ( $this->xmlaDimension != null )
       {
          return $this->xmlaDimension;
       }
 
-      $dimensionUniqueName = XMLAUtil::stringElement ( $row, 'DIMENSION_UNIQUE_NAME' );
-      $dimensionsByUname = $this->getCube ( $row )->dimensionsByUname;
-      $dimension = isset ( $dimensionsByUname [ $dimensionUniqueName ] )
-                     ? $dimensionsByUname [ $dimensionUniqueName ]
-                     : null;
+      $dimensionUniqueName = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
+      $dimensionsByUname   = $this->getCube( $row )->dimensionsByUname;
+      $dimension           = isset ($dimensionsByUname [$dimensionUniqueName])
+         ? $dimensionsByUname [$dimensionUniqueName]
+         : null;
 
       // Apparently, the code has requested a member that is
       // not queried for yet.
       if ( $dimension == null )
       {
-         $dimensionName = XMLAUtil::stringElement ( $row, 'DIMENSION_NAME' );
-          return $this->getCube ( $row )->dimensions->get ( $dimensionName );
+         $dimensionName = XMLAUtil::stringElement( $row, 'DIMENSION_NAME' );
+         return $this->getCube( $row )->getDimensions()->get( $dimensionName );
       }
       return $dimension;
    }
@@ -200,31 +200,33 @@ class XMLAConnectionContext
    /**
     * @return XMLAHierarhcy
     */
-   public function getHierarchy ( DOMElement $row )
+   public function getHierarchy( DOMElement $row )
    {
-      if ( $this->xmlaHierarchy != null)
-          return $this->xmlaHierarchy;
+      if ( $this->xmlaHierarchy != null )
+      {
+         return $this->xmlaHierarchy;
+      }
 
-      $hierarchyUniqueName = XMLAUtil::stringElement ( $row, 'HIERARCHY_UNIQUE_NAME' );
-      $hierarchiesByUname = $this->getCube ( $row )->hierarchiesByUname;
-      $hierarchy = isset ( $hierarchiesByUname [ $hierarchyUniqueName ] )
-                     ? $hierarchiesByUname [ $hierarchyUniqueName ]
-                     : null;
+      $hierarchyUniqueName = XMLAUtil::stringElement( $row, 'HIERARCHY_UNIQUE_NAME' );
+      $hierarchiesByUname  = $this->getCube( $row )->hierarchiesByUname;
+      $hierarchy           = isset ($hierarchiesByUname [$hierarchyUniqueName])
+         ? $hierarchiesByUname [$hierarchyUniqueName]
+         : null;
 
       if ( $hierarchy == null )
       {
-          // Apparently, the code has requested a member that is
-          // not queried for yet. We must force the initialization
-          // of the dimension tree first.
-          $dimensionUniqueName = XMLAUtil::stringElement ( $row, 'DIMENSION_UNIQUE_NAME' );
-          $dimensionName = Olap4jUtil::parseUniqueName ( $dimensionUniqueName )->get ( 0 );
-          $dimension = $this->getCube ( row )->getDimensions ( )->get ( $dimensionName );
-          $dimension->getHierarchies ( )->size ( );
-          // Now we attempt to resolve again
-          $hierarchiesByUname = $this->getCube ( $row )->hierarchiesByUname;
-          $hierarchy = isset ( $hierarchiesByUname [ $hierarchyUniqueName ] )
-                          ? $hierarchiesByUname [ $hierarchyUniqueName ]
-                          : null;
+         // Apparently, the code has requested a member that is
+         // not queried for yet. We must force the initialization
+         // of the dimension tree first.
+         $dimensionUniqueName = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
+         $dimensionName       = XMLAUtil::parseUniqueName( $dimensionUniqueName )->get( 0 );
+         $dimension           = $this->getCube( $row )->getDimensions()->get( $dimensionName );
+         $dimension->getHierarchies()->size();
+         // Now we attempt to resolve again
+         $hierarchiesByUname = $this->getCube( $row )->hierarchiesByUname;
+         $hierarchy          = isset ($hierarchiesByUname [$hierarchyUniqueName])
+            ? $hierarchiesByUname [$hierarchyUniqueName]
+            : null;
       }
 
       return $hierarchy;
@@ -233,35 +235,35 @@ class XMLAConnectionContext
    /**
     * @return XMLALevel Level (must not be null)
     */
-   public function getLevel ( DOMElement $row )
+   public function getLevel( DOMElement $row )
    {
       if ( $this->xmlaLevel != null )
       {
          return $this->xmlaLevel;
       }
-      $levelUniqueName = XMLAUtil::stringElement ( $row, 'LEVEL_UNIQUE_NAME' );
-      $levelsByUname = $this->getCube ( $row )->levelsByUname;
-      $level = isset ( $levelsByUname [ $levelUniqueName ] )
-                  ? $levelsByUname [ $levelUniqueName ]
-                  : null;
+      $levelUniqueName = XMLAUtil::stringElement( $row, 'LEVEL_UNIQUE_NAME' );
+      $levelsByUname   = $this->getCube( $row )->levelsByUname;
+      $level           = isset ($levelsByUname [$levelUniqueName])
+         ? $levelsByUname [$levelUniqueName]
+         : null;
 
       if ( $level == null )
       {
          // Apparently, the code has requested a member that has
          // not been queried yet. We must force the initialization
          // of the dimension tree first.
-         $dimensionUniqueName = XMLAUtil::stringElement ( $row, 'DIMENSION_UNIQUE_NAME' );
-         $parsedUniqueName = Util::parseUniqueName ( $dimensionUniqueName );
-         $dimensionName = $parsedUniqueName[ 0 ];
+         $dimensionUniqueName = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
+         $parsedUniqueName    = XMLAUtil::parseUniqueName( $dimensionUniqueName );
+         $dimensionName       = $parsedUniqueName[0];
          //print $dimensionName;
-         $dimension = $this->getCube ( $row )->getDimensions ( )->get ( $dimensionName );
-         foreach ( $dimension->getHierarchies ( ) as $hierarchy )
+         $dimension = $this->getCube( $row )->getDimensions()->get( $dimensionName );
+         foreach ( $dimension->getHierarchies() as $hierarchy )
          {
-            $hierarchy->getLevels ( )->size ( );
+            $hierarchy->getLevels()->size();
          }
 
          // Now we attempt to resolve again
-         $level = $this->getCube ( $row )->levelsByUname [ $levelUniqueName ];
+         $level = $this->getCube( $row )->levelsByUname [$levelUniqueName];
       }
       return $level;
    }
@@ -269,14 +271,14 @@ class XMLAConnectionContext
    /**
     * @return XMLACatalog
     */
-   public function getCatalog ( DOMElement $row )
+   public function getCatalog( DOMElement $row )
    {
       if ( $this->xmlaCatalog != null )
       {
          return $this->xmlaCatalog;
       }
 
-      $catalogName = XMLAUtil::stringElement ( $row, 'CATALOG_NAME' );
-      return $this->xmlaConnection->getCatalogs ( )->get ( $catalogName );
+      $catalogName = XMLAUtil::stringElement( $row, 'CATALOG_NAME' );
+      return $this->xmlaConnection->getCatalogs()->get( $catalogName );
    }
 }

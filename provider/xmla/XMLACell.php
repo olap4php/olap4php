@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -45,75 +45,83 @@ class XMLACell implements ICell
     * Construtor
     *
     * @param XMLACellSet $cellset
-    * @param integer $ordinal
-    * @param mixed $value
-    * @param string $formattedValue
-    * @param array $propertyValues
+    * @param integer     $ordinal
+    * @param mixed       $value
+    * @param string      $formattedValue
+    * @param array       $propertyValues
     */
-   public function __construct (
-        XMLACellSet $cellSet,
-        $ordinal,
-        $value,
-        $formattedValue,
-        $propertyValues )
-    {
-       $this->cellSet = $cellSet;
-       $this->formattedValue = $formattedValue;
-       $this->ordinal = $ordinal;
-       $this->propertyValues = $propertyValues;
-       $this->value = $value;
-    }
+   public function __construct(
+      XMLACellSet $cellSet,
+      $ordinal,
+      $value,
+      $formattedValue,
+      $propertyValues )
+   {
+      $this->cellSet        = $cellSet;
+      $this->formattedValue = $formattedValue;
+      $this->ordinal        = $ordinal;
+      $this->propertyValues = $propertyValues;
+      $this->value          = $value;
+   }
 
 
-   public function getCellSet ( )
+   public function getCellSet()
    {
       return $this->cellSet;
    }
 
-   public function getCoordinateList ( )
+   public function getCoordinateList()
    {
-      return $this->cellSet->ordinalToCoordinates ( $this->ordinal );
+      return $this->cellSet->ordinalToCoordinates( $this->ordinal );
    }
 
-   public function getErrorText ( )
+   public function getErrorText()
    {
       return null;
    }
 
-   public function getFormattedValue ( )
+   public function getFormattedValue()
    {
       return $this->formattedValue;
    }
 
-   public function getOrdinal ( )
+   public function getOrdinal()
    {
       return $this->ordinal;
    }
 
-   public function getPropertyValue ( $property )
+   public function getPropertyValue( $property )
    {
-      if ( isset ( $this->propertyValues [ $property ] ) )
-         return $this->propertyValues [ $property ];
+      if ( isset ($this->propertyValues [$property]) )
+      {
+         return $this->propertyValues [$property];
+      }
+
+      return null;
    }
 
-   public function getValue ( )
+   public function getValue()
    {
       return $this->value;
    }
 
-   public function isEmpty ( )
+   public function isEmpty()
    {
-      return $this->isNull ( );
+      return $this->isNull();
    }
 
-   public function isError ( )
+   public function isError()
    {
       return false;
    }
 
-   public function isNull ( )
+   public function isNull()
    {
       if ( $this->value === null )
+      {
          return true;
+      }
+
+      return false;
    }
 }

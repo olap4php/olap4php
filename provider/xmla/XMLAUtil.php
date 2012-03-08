@@ -1,13 +1,13 @@
 <?php
 /**
  * olap4php
- * 
+ *
  * LICENSE
- * 
- * Licensed to SeeWind Design Corp. under one or more 
+ *
+ * Licensed to SeeWind Design Corp. under one or more
  * contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership.  SeeWind Design licenses 
+ * regarding copyright ownership.  SeeWind Design licenses
  * this file to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at:
@@ -30,6 +30,7 @@ namespace OLAP4PHP\Provider\XMLA;
 
 // Classes / Objects
 use \DOMElement;
+
 //use OLAP4PHP\OLAP\OLAPException;
 
 
@@ -49,16 +50,18 @@ abstract class XMLAUtil
     * Extract child element nodes from provided element node.
     *
     * @param DOMElement $node
-    * 
+    *
     * @return array DOMElement
     */
-   static public function childElements ( DOMElement $node )
+   static public function childElements( DOMElement $node )
    {
-      $elements = array ( );
+      $elements = array();
 
       foreach ( $node->childNodes as $node )
          if ( $node instanceof DOMElement )
+         {
             $elements [] = $node;
+         }
 
       return $elements;
    }
@@ -68,18 +71,19 @@ abstract class XMLAUtil
     * Find a child element of the specified element.
     *
     * @param DOMElement $element
-    * @param $ns
-    * @param $tag
+    * @param            $ns
+    * @param            $tag
     *
     * @return DOMElement
     */
-   static public function findChild ( DOMElement $element, $ns, $tag )
+   static public function findChild( DOMElement $element, $ns, $tag )
    {
       foreach ( $element->childNodes as $child )
       {
          if ( $child instanceof DOMElement
-              && $child->localName == $tag
-              && ( $ns == null || $child->namespaceURI == $ns ) )
+            && $child->localName == $tag
+            && ($ns == null || $child->namespaceURI == $ns)
+         )
          {
             return $child;
          }
@@ -91,61 +95,62 @@ abstract class XMLAUtil
 
    /**
     * @param $element blah
-    * @param $ns blah blah
-    * @param $tag blah blah blah
+    * @param $ns      blah blah
+    * @param $tag     blah blah blah
     *
     * @return array DomElement
     */
-   static public function findChildren ( DOMElement $element, $ns, $tag )
+   static public function findChildren( DOMElement $element, $ns, $tag )
    {
-      $elements = array ( );
+      $elements = array();
 
       foreach ( $element->childNodes as $node )
       {
          if ( $node->localName == $tag
-              && ( $ns == null || $node->namespaceURI == $ns ) )
+            && ($ns == null || $node->namespaceURI == $ns)
+         )
          {
             $elements [] = $node;
          }
       }
 
       return $elements;
-    }
-
-
-   /**
-   * @param $row
-   * @param $name
-   *
-   * @return string
-   */
-   static public function doubleElement ( DOMElement $row, $name )
-   {
-      return (float) XMLAUtil::stringElement ( $row, $name );
    }
 
 
    /**
-   * @param $row
-   * @param $name
-   *
-   * @return integer
-   */
-   static public function integerElement ( DOMElement $row, $name )
+    * @param $row
+    * @param $name
+    *
+    * @return string
+    */
+   static public function doubleElement( DOMElement $row, $name )
    {
-      return (integer) XMLAUtil::stringElement ( $row, $name );
+      return (float)XMLAUtil::stringElement( $row, $name );
    }
 
 
    /**
-   * @param $row
-   * @param $name
-   *
-   * @return float
-   */
-   static public function floatElement ( DOMElement $row, $name )
+    * @param $row
+    * @param $name
+    *
+    * @return integer
+    */
+   static public function integerElement( DOMElement $row, $name )
    {
-      return (float) XMLAUtil::stringElement ( $row, $name );
+      return (integer)XMLAUtil::stringElement( $row, $name );
+   }
+
+
+   /**
+    * @param $row
+    * @param $name
+    *
+    * @return float
+    */
+   static public function floatElement( DOMElement $row, $name )
+   {
+      return (float)XMLAUtil::stringElement( $row, $name );
    }
 
 
@@ -155,31 +160,31 @@ abstract class XMLAUtil
     *
     * @return long
     */
-   static public function longElement ( DOMElement $row, $name )
+   static public function longElement( DOMElement $row, $name )
    {
-      return (float) XMLAUtil::stringElement ( $row, $name );
+      return (float)XMLAUtil::stringElement( $row, $name );
    }
 
 
    /**
-   * @param $row
-   * @param $name
-   *
-   * @return boolean
-   */
-   static public function booleanElement ( DOMElement $row, $name )
+    * @param $row
+    * @param $name
+    *
+    * @return boolean
+    */
+   static public function booleanElement( DOMElement $row, $name )
    {
-      return (boolean) XMLAUtil::stringElement ( $row, $name );
+      return (boolean)XMLAUtil::stringElement( $row, $name );
    }
 
 
    /**
-   * @param $row
-   * @param $name
-   *
-   * @return string
-   */
-   static public function stringElement ( DOMElement $row, $name )
+    * @param $row
+    * @param $name
+    *
+    * @return string
+    */
+   static public function stringElement( DOMElement $row, $name )
    {
       foreach ( $row->childNodes as $node )
       {
@@ -194,7 +199,7 @@ abstract class XMLAUtil
 
    /**
     * @brief Converts SQL-style pattern matches into PREG match strings
-    * 
+    *
     * @param array $wildcards
     *
     * @return string
@@ -221,6 +226,7 @@ abstract class XMLAUtil
     * of strings in a single hash table.
     *
     * @param string $string
+    *
     * @return int
     */
    public static function javaStringHashCode( $string )
@@ -238,12 +244,18 @@ abstract class XMLAUtil
    }
 
 
-   public static function gatherText ( DOMElement $element )
+   public static function gatherText( DOMElement $element )
    {
       $buf = '';
       foreach ( $element->childNodes as $node )
          $buf .= $node->textContent;
 
       return $buf;
+   }
+
+   public static function parseUniqueName( $uniqueName )
+   {
+      $elements = explode( '.', $uniqueName );
+      return str_replace( array( '[', ']' ), '', $elements[0] );
    }
 }
