@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- olap4php build file -->
+<project name="olap4php" default="build">
+    <property environment="env"/>
+
+    <property file="olap4php.properties"/>
+
+    <property name="project.name" value="${olap4php.project.name}"/>
+    <property name="project.docs" value="${olap4php.project.name}-docs"/>
+    <property name="project.version" value="${olap4php.version.major}.${olap4php.version.minor}.${olap4php.version.release}"/>
+    <property name="project.fullname" value="${project.name} ${project.version}"/>
+    <property name="project.package.name" value="olap4php-${project.version}"/>
+    <property name="project.package.docs" value="olap4php-docs-${project.version}"/>
+
+    <resolvepath propertyName="project.path.root" file="./"/>
+    <resolvepath propertyName="project.path.temp" file="${olap4php.package.temp}"/>
+    <resolvepath propertyName="project.path.package" file="${olap4php.package.path}"/>
+
+    <target name="build" depends="clean,prepare,package,docs">
+        <echo>Built ${project.fullname}</echo>
+    </target>
+
+    <target name="info">
+        <echo>--------------------------------------------------------------------</echo>
+        <echo> project.name         = ${project.name}</echo>
+        <echo> project.docs         = ${project.docs}</echo>
+        <echo> project.version      = ${project.version}</echo>
+        <echo> project.fullname     = ${project.fullname}</echo>
+        <echo> project.path.root    = ${project.path.root}</echo>
+        <echo> project.path.temp    = ${project.path.temp}</echo>
+        <echo> project.path.package = ${project.path.package}</echo>
+        <echo> project.package.name = ${project.package.name}</echo>
+        <echo> project.package.docs = ${project.package.docs}</echo>
+        <echo>--------------------------------------------------------------------</echo>
+    </target>
+
+    <target name="prepare" depends="info,phpab">
+        <echo>Build prepared for ${project.fullname}</echo>
+    </target>
+
+    <target name="prepare-package">
+        <copy includeemptydirs="false" todir="${project.path.temp}/${project.name}">
+            <fileset dir="${project.path.root}">
+                <include name="**/**"/>
+                <exclude name=".DS_Store"/>
+                <exclude name="**/.git/**"/>
+                <exclude name="**/.idea/**"/>
+            </fileset>
+        </copy>
+        <mkdir dir="${project.path.temp}/${project.docs}"/>
+        <mkdir dir="${project.path.package}"/>
+    </target>
+
+    <target name="clean">
+        <!-- clean up any existing source archives -->
+        <delete dir="${project.path.temp}/${project.name}" includeemptydirs="true"/>
+        <delete file="${project.path.package}/${project.package.name}.tar.gz"/>
+        <delete file="${project.path.package}/${project.package.name}.zip"/>
+
+        <!-- clean up any existing documentation archives -->
+        <delete dir="${project.path.temp}/${project.docs}" includeemptydirs="true"/>
+        <delete file="${project.path.package}/${project.package.docs}.tar.gz"/>
+        <delete file="${project.path.package}/${project.package.docs}.zip"/>
+
+        <!-- clean up the package folder -->
+        <delete dir="${project.path.package}" includeemptydirs="true"/>
+    </target>
+
+    <target name="phpab">
+        <!-- build the autoload file with PHPAB -->
+        <echo>Generating Autoload</echo>
+        <exec command="phpab -i '*.php' -o ${project.path.root}/autoload.php ${project.path.root}"/>
+    </target>
+
+    <target name="package" depends="prepare-package">
+        <echo>Creating: olap4php-${olap4php.version.major}.${olap4php.version.minor}.${olap4php.version.release}.tar.gz</echo>
+        <tar destFile="${project.path.package}/${project.package.name}.tar.gz" compression="gzip" includeemptydirs="false">
+            <fileset dir="${project.path.temp}" expandsymboliclinks="true">
+                <include name="${project.name}/**"/>
+            </fileset>
+        </tar>
+
+        <echo>Creating: olap4php-${olap4php.version.major}.${olap4php.version.minor}.${olap4php.version.release}.zip</echo>
+        <zip destfile="${project.path.package}/${project.package.name}.zip" includeemptydirs="false">
+            <fileset dir="${project.path.temp}" expandsymboliclinks="true">
+                <include name="${project.name}/**"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="docs" depends="prepare-package">
+        <echo>Generating DocBlox HTML</echo>
+        <docblox title="${olap4php.docs.title}" destDir="${project.path.temp}/${project.docs}">
+            <fileset dir="${project.path.root}">
+                <include name="**/*.php"/>
+            </fileset>
+        </docblox>
+
+        <echo>Creating: olap4php-docs-${olap4php.version.major}.${olap4php.version.minor}.${olap4php.version.release}.tar.gz</echo>
+        <tar destFile="${project.path.package}/${project.package.docs}.tar.gz" compression="gzip">
+            <fileset dir="${project.path.temp}" expandsymboliclinks="true">
+                <include name="${project.docs}/**"/>
+            </fileset>
+        </tar>
+
+        <echo>Creating: olap4php-docs-${olap4php.version.major}.${olap4php.version.minor}.${olap4php.version.release}.zip</echo>
+        <zip destfile="${project.path.package}/${project.package.docs}.zip">
+            <fileset dir="${project.path.temp}" expandsymboliclinks="true">
+                <include name="${project.docs}/**"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="make-patch">
+        <echo>Generating a patch between origin/master and local master</echo>
+        <exec command="git diff origin/master master" output="./patch/${host.name}.patch"/>
+    </target>
+
+</project>
