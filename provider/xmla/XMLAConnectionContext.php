@@ -219,8 +219,8 @@ class XMLAConnectionContext
          // not queried for yet. We must force the initialization
          // of the dimension tree first.
          $dimensionUniqueName = XMLAUtil::stringElement( $row, 'DIMENSION_UNIQUE_NAME' );
-         $dimensionName       = XMLAUtil::parseUniqueName( $dimensionUniqueName )->get( 0 );
-         $dimension           = $this->getCube( $row )->getDimensions()->get( $dimensionName );
+         $parsedNames         = XMLAUtil::parseUniqueName( $dimensionUniqueName );
+         $dimension           = $this->getCube( $row )->getDimensions()->get( $parsedNames[0] );
          $dimension->getHierarchies()->size();
          // Now we attempt to resolve again
          $hierarchiesByUname = $this->getCube( $row )->hierarchiesByUname;

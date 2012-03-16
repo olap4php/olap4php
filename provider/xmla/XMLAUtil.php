@@ -253,10 +253,19 @@ abstract class XMLAUtil
       return $buf;
    }
 
+   /**
+    * @static
+    * @param $uniqueName string UName string to parse
+    * @return array
+    */
    public static function parseUniqueName( $uniqueName )
    {
-      $elements = explode( '.', $uniqueName );
-      return str_replace( array( '[', ']' ), '', $elements[0] );
+      if ( preg_match_all( '#\[(.+?)\]#', $uniqueName, $matches, PREG_PATTERN_ORDER ) )
+      {
+         return $matches[1];
+      }
+
+      return array('');
    }
 
    /**
