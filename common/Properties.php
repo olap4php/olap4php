@@ -33,5 +33,5 @@ class Properties
 
    const DRIVER_MINOR_VERSION = '9';
 
-   const DRIVER_VERSION = '0.9.1';
+   const DRIVER_VERSION = '0.9.2';
 }
