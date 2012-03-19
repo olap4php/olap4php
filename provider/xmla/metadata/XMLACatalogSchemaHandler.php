@@ -57,7 +57,7 @@ class XMLACatalogSchemaHandler extends XMLAMetadataHandler
       if ( $this->catalogName == $catalogName && $list->get( $schemaName ) === NULL )
       {
          //echo 'XMLACatalogSchmeHandler: inside if';
-         if ( $schemaName )
+         if ( $schemaName !== null )
          {
             $list->add( new XMLASchema($context->getCatalog( $row ), $schemaName) );
          }
