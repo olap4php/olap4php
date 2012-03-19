@@ -1,4 +1,4 @@
-olap4php v0.9.1
+olap4php v0.9.2
 
 This project is originally based on the olap4j Java project, written
 by Julian Hyde, Luc Boudreau and other contributors.  Their software
@@ -17,8 +17,9 @@ For more information, please visit the following web sites:
 Change Log
 ----------
 
-0.9.0: Friday, January 13th, 2012; Patrick Leckey <pat@olap4php.org>
-- Initial public release
+0.9.2: Monday, March 19th, 2012; Patrick Leckey <pat@olap4php.org>
+- Fixed an issue with XMLAUtil::parseUniqueName() that resulted in XMLA parse failures
+- Fixed an issue with SSAS XML/A not adding to the schema NamedList
 
 0.9.1: Thursday, March 8th, 2012; Patrick Leckey <pat@olap4php.org>
 - Fixed an incompatibility with Microsoft SSAS XML/A Cube Names
@@ -29,3 +30,6 @@ Change Log
 - Corrected versions in Properties class
 - Added patch folder for IDEA-style upgrade patches
 - Cleaned up some documentation and code style issues (ongoing)
+
+0.9.0: Friday, January 13th, 2012; Patrick Leckey <pat@olap4php.org>
+- Initial public release
